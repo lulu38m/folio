@@ -1,18 +1,18 @@
 # Motion
 
-Motion is built last but it is part of the design: a page that does not answer the scroll feels like a
-PDF. A personal site is read, not operated, so the motion follows the reading: one orchestrated moment on
-load, the person's motif moving with the scroll, and short entrances as sections arrive. Never effects for
-their own sake. Rules adapted from Emil Kowalski's skills (MIT).
+Motion is built last and kept small. A personal site is read, not operated: most of the page holds
+still, and what moves moves once. One orchestrated moment on load, section headings that rise as they
+arrive, one live thing, and at most one scroll-linked move on the motif. A page that moves everywhere is
+tiring and reads as a demo. Never effects for their own sake. Rules adapted from Emil Kowalski's skills (MIT).
 
 ## What moves
 
 1. **The signature move** on the sheet, once, on load or when its section enters.
-2. **The scroll move** on the sheet: the motif and one or two display lines tied to the scroll
-   (below, §Scroll). This is what makes the page feel alive between the load and the contact.
-3. **Entrances**: a section's heading line by line (`data-reveal="lines"`), then its text, then its
-   picture, staggered 40–80 ms apart, rising 12–24px with opacity, once. Not one fade for a whole block,
-   and not the same fade on every block of the page.
+2. **Optional, the scroll move** on the sheet, on the motif only (a drawing, a bar; below, §Scroll).
+   One per page at most. No display type sliding with the scroll, no pinned chapters.
+3. **Entrances**: a section's heading rises once (`data-reveal`, or line by line with
+   `data-reveal="lines"`), 12–24px with opacity. Not every paragraph, list item, row or picture: the
+   check warns past about a dozen entrances.
 4. **Feedback**: buttons scale to 0.97 on press (100–160 ms); links thicken their underline on hover;
    the copy-email button changes its label to confirm.
 5. Nothing else. No parallax on running text, no cursor followers, no marquee of skills, no infinite
@@ -78,6 +78,9 @@ display lines move in opposite directions; running text never moves with the scr
 a margin gets `padding-inline` of half its `--shift`, so the slide ends on the margin, never off the edge. To stagger several
 shapes, give each its own range with `--k` (0, 1, 2…):
 `stroke-dashoffset: clamp(0, calc(1 - var(--pe, 1) * 1.5 + var(--k) * 0.12), 1)`.
+
+Never put a scroll helper and `data-reveal` on the same element: both set `transform`, and the reveal
+cancels the scroll move (or the reverse). The scroll move goes on a wrapper, the reveal on the child.
 
 ## Never lose content
 

@@ -23,13 +23,14 @@ Les deux sites ci-dessus ont été faits par `folio` à partir de CV fictifs : 
 |---|---|---|---|
 | Prix | Gratuit | 12 € une fois | 29 € une fois |
 | Site fait à partir de votre CV | ✓ | ✓ | ✓ |
-| Hébergement | Par vous | 1 an inclus, sur `prenom-nom.FOLIO_DOMAIN` | 1 an inclus, sur votre propre domaine |
+| Hébergement | Par vous | 1 an inclus, sur `prenom-nom.FOLIO_DOMAIN` | 1 an inclus, sur votre propre domaine (.fr compris, .com : +6 €) |
 | Modifications | Autant que vous voulez | 2 régénérations | Illimitées pendant 1 an |
 | Visuel et post LinkedIn | ✓ | ✓ | ✓ |
 | Signature « Fait avec folio » | Au choix | Oui | Non |
 | Code source du site | ✓ | | ✓ |
+| Renouvellement, après la première année | | 19 € par an | 29 € par an |
 
-Après la première année, l'hébergement se renouvelle à 19 € par an, mises à jour du CV comprises, sans prélèvement automatique.
+Le renouvellement comprend les mises à jour du CV, et rien n'est prélevé automatiquement.
 
 Le skill reste gratuit et open source. Installez-le ci-dessous et lancez-le vous-même quand vous voulez.
 
@@ -91,20 +92,20 @@ Le skill fonctionne en français et en anglais, et écrit le site dans la langue
 1. **Lire.** `extract_cv.py` récupère le texte, les liens et la photo du CV. L'agent remplit un profil en recopiant les faits tels quels, et pose en une seule fois les questions sur ce qui manque.
 2. **Masquer le privé.** Téléphone, adresse, date de naissance, nationalité et photo restent hors du site, sauf demande de la personne.
 3. **Tirer une direction.** `deal.py` tire trois directions artistiques sur dix, chacune avec sa typographie et sa palette, à partir de la personne : deux personnes du même métier n'ont jamais le même site.
-4. **Construire.** Un site Astro statique à partir de `assets/site-template/` : îlots React pour l'animation, Tailwind, polices auto-hébergées (Fontsource), composants [Cult UI](https://www.cult-ui.com) en option.
+4. **Construire.** Un site Astro statique à partir de `assets/site-template/` : îlots React pour l'animation, Tailwind, polices auto-hébergées (Fontsource), composants [Cult UI](https://www.cult-ui.com) et [Kokonut UI](https://kokonutui.com) en option.
 5. **SEO.** `seo_head.py` écrit le titre, la description, l'Open Graph, un `Person` schema.org avec les seules infos publiques, et le sitemap.
 6. **Vérifier, regarder, corriger.** `check_site.mjs` ouvre le site dans un vrai navigateur à trois largeurs et refuse ce qui a l'air généré. L'agent regarde les captures, les critique comme un jury, corrige et regarde à nouveau.
 7. **Annoncer.** Un visuel et un post LinkedIn pour partager le site.
 
 ## Ce qu'il refuse de faire
 
-Barres de compétences, « Salut, moi c'est Alex 👋 », effets machine à écrire, frises à points, avatars ronds, rangées d'icônes, murs de logos, une carte par poste, dégradés, verre dépoli, halos, sur-titres, légendes en police monospace, les palettes crème-terracotta et violettes, les liens Google Fonts, et tout fait absent du CV.
+Barres de compétences, « Salut, moi c'est Alex 👋 », effets machine à écrire, frises à points, avatars ronds, rangées d'icônes, murs de logos, une carte par poste, dégradés, verre dépoli, halos, sur-titres, les palettes crème-terracotta et violettes, les liens Google Fonts, et tout fait absent du CV. Ce sont des règles de style par défaut : un site peut en enfreindre une seule, exprès, si elle cache quelque chose de vrai sur la personne. La police monospace et les filets fins ne donnent plus qu'un avertissement. L'honnêteté, la vie privée et la lisibilité n'ont aucune exception.
 
 ## Prérequis
 
 - Un agent compatible Agent Skills : Claude Code, l'app Claude, Codex CLI, opencode, ou tout agent à instructions personnalisées
 - Python 3.9+ avec `pypdf`
-- Node.js 22.23+ (Node 24 LTS conseillé) et npm. Vérifiez avec `node -v` ; si elle est plus ancienne, `nvm install 24` (ou téléchargez-la sur nodejs.org)
+- Node.js 22.23+ (Node 24 LTS conseillé) et npm. Vérifiez avec `node -v`. Avec une version plus ancienne, le skill récupère Node 24 tout seul avec `npx` ; pour mettre à jour, `nvm install 24` ou nodejs.org
 - Playwright avec Chromium, pour la vérification : `npm i -D playwright && npx playwright install chromium`
 - Facultatif : `tesseract` (avec le français), pour lire les CV exportés en image (Canva, scans). Sans lui, l'agent lit lui-même l’image de la page
 

@@ -48,7 +48,7 @@ so the page looks decided.
 
 - **Margins**: one pair, 16–32px, equal on both sides at every width. The navigation sits on the same
   margins as the content.
-- **Grid**: 12 columns on desktop, 4 on the phone. Every left edge is a column line. Two or three anchor
+- **Grid**: 12 columns from 768px (Tailwind's `md:`), 4 below. Every left edge is a column line. Two or three anchor
   lines for the whole page (the margin, a third across, the midpoint), reused on purpose.
 - **No centred container by reflex.** Large things (the name, colour fields, pictures) run the full
   width; only the measure of running text is constrained (`max-width` in `ch` on the paragraph).

@@ -23,13 +23,14 @@ The two sites above were made by `folio` from fictional CVs: a nurse whose page 
 |---|---|---|---|
 | Price | Free | 12 € once | 29 € once |
 | Site made from your CV | ✓ | ✓ | ✓ |
-| Hosting | Your own | 1 year included, on `firstname-lastname.FOLIO_DOMAIN` | 1 year included, on your own domain |
+| Hosting | Your own | 1 year included, on `firstname-lastname.FOLIO_DOMAIN` | 1 year included, on your own domain (.fr included, .com +6 €) |
 | Changes | As many as you like | 2 regenerations | Unlimited for 1 year |
 | LinkedIn image and post | ✓ | ✓ | ✓ |
 | "Made with folio" footer | Your call | Yes | No |
 | Site source code | ✓ | | ✓ |
+| Renewal, after the first year | | 19 € a year | 29 € a year |
 
-After the first year, hosting renews at 19 € a year, CV updates included, never charged automatically.
+Renewal includes CV updates, and nothing is ever charged automatically.
 
 The skill stays free and open source. Install it below and run it yourself anytime.
 
@@ -103,20 +104,20 @@ The skill works in French and English and writes the site in the CV's language. 
 1. **Read.** `extract_cv.py` pulls the text, links and photo from the CV. The agent fills a profile, copying facts as written, and asks once, in one message, for anything essential that is missing.
 2. **Hide what is private.** Phone, street address, date of birth, nationality and photo stay off the page unless the person asks for them.
 3. **Deal a direction.** `deal.py` deals three of ten art directions, each with its own type system and palette, seeded by the person, so two people in the same job never get the same site.
-4. **Build.** A static Astro site from `assets/site-template/`: React islands for motion, Tailwind, self-hosted fonts from Fontsource, optional [Cult UI](https://www.cult-ui.com) components.
+4. **Build.** A static Astro site from `assets/site-template/`: React islands for motion, Tailwind, self-hosted fonts from Fontsource, optional [Cult UI](https://www.cult-ui.com) and [Kokonut UI](https://kokonutui.com) components.
 5. **SEO.** `seo_head.py` writes the title, description, Open Graph, a schema.org `Person` with public facts only, and the sitemap.
 6. **Check, look, fix.** `check_site.mjs` opens the site in a real browser at three widths and fails what reads as generated. The agent looks at the screenshots, critiques them like a juror, fixes, and looks again.
 7. **Announce.** A LinkedIn image and post to share the site.
 
 ## What it refuses to make
 
-Skill bars, "Hi, I'm Alex 👋", typing effects, timelines with dots, circular avatars, icon rows, tech logo walls, cards for every job, gradients, glass, glows, eyebrow labels, monospace "tech" captions, the cream-and-terracotta and purple palettes, Google Fonts links, and any fact that is not in the CV.
+Skill bars, "Hi, I'm Alex 👋", typing effects, timelines with dots, circular avatars, icon rows, tech logo walls, cards for every job, gradients, glass, glows, eyebrow labels, the cream-and-terracotta and purple palettes, Google Fonts links, and any fact that is not in the CV. These style rules are the default: a page may break one of them on purpose, when it hides something true about the person. Monospace and thin rules are only warnings now. Honesty, privacy and legibility have no exception.
 
 ## Requirements
 
 - An agent that supports Agent Skills: Claude Code, the Claude app, Codex CLI, opencode, or any agent with custom instructions
 - Python 3.9+ with `pypdf`
-- Node.js 22.23+ (Node 24 LTS recommended) and npm. Check with `node -v`; if it is older, `nvm install 24` (or download it from nodejs.org)
+- Node.js 22.23+ (Node 24 LTS recommended) and npm. Check with `node -v`. With an older one, the skill fetches Node 24 by itself through `npx`; to upgrade, `nvm install 24` or nodejs.org
 - Playwright with Chromium, for the check: `npm i -D playwright && npx playwright install chromium`
 - Optional: `tesseract` (with the French data), to read CVs exported as images (Canva, scans). Without it, the agent reads the page image itself
 
@@ -140,7 +141,7 @@ Optional, for a second review pass: `npx skills add vercel-labs/agent-skills --s
 - House rules and the look-and-fix loop adapted from [taste-skill](https://github.com/Leonxlnx/taste-skill) (MIT, © 2026 Leonxlnx)
 - Motion rules adapted from [Emil Kowalski's skills](https://github.com/emilkowalski/skills) (MIT, © 2026 Emil Kowalski)
 - SEO hygiene rules adapted from Vercel's [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines) (MIT, © 2025 Vercel Labs)
-- Optional components adapted from [Cult UI](https://www.cult-ui.com) (MIT, © 2023 Jordan Gilliam)
+- Optional components adapted from [Cult UI](https://www.cult-ui.com) (MIT, © 2023 Jordan Gilliam) and [Kokonut UI](https://kokonutui.com) (MIT, © Dorian Baffier)
 - The optional review step uses the `web-design-guidelines` skill from [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills)
 - Fonts from [Fontsource](https://fontsource.org), under the SIL Open Font License
 

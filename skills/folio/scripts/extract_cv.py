@@ -149,6 +149,10 @@ def main():
     print(f"links: {len(links)} -> {a.out}/links.json")
     for l in links:
         print("  ", l["uri"])
+    # A CV that names a profile but holds no address for it: « Microsoft Print To PDF » and some scans drop every link.
+    for label, host in (("LinkedIn", "linkedin.com"), ("GitHub", "github.com"), ("GitLab", "gitlab.com"), ("Behance", "behance.net"), ("Portfolio", None)):
+        if re.search(rf"\b{label}\b", text, re.I) and not (host and any(host in l["uri"].lower() for l in links)) and not (host is None and any(l["uri"].startswith("http") for l in links)):
+            print(f"LINK LOST: the CV names {label} but the PDF holds no address for it. Ask the person for the URL; never guess it.")
     print(f"images: {len(imgs)} -> {a.out}/images/")
     for s in imgs[:8]:
         shape = "portrait" if s["ratio"] and s["ratio"] > 1.05 else ("square" if s["ratio"] and s["ratio"] > 0.9 else "landscape")

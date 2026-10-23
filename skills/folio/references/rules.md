@@ -56,8 +56,8 @@ everywhere gives a sober page; a sober page is not yet a good one.
 | One word of the headline in italic, serif, colour or underline *(look)* | One face, one colour per headline. |
 | Everything centred *(check)* | Left-anchored; centre one moment per page at most. |
 | Nine sizes close to each other *(check)* | Five sizes, far apart. |
-| Fade-and-rise on every block, bounce easing, infinite loops *(look)* | One signature move, one scroll move, short staggered entrances, ease-out (`motion.md`). |
-| A page that does not move at all, or only fades *(check: no scroll move)* | The sheet's scroll move on the motif and a display line (`data-scroll`, `motion.md` §Scroll). |
+| Fade-and-rise on every block, bounce easing, infinite loops *(check: too many entrances)* | One signature move, headings that rise once, one live thing, ease-out (`motion.md`). |
+| Everything sliding, pinning and drawing with the scroll *(check: more than one scroll move)* | At most one scroll-linked move, on the motif, if it earns it (`motion.md` §Scroll). Most of the page holds still. |
 | An empty page: type on plain ground, section after section *(check)* | The motif in three sections, two full-width fields, one element at display scale per section, and more material from the person (`SKILL.md` step 1). |
 | The same layout twice in a row, heading left and text right down the page *(check)* | The shape the sheet deals for each role; name each section's layout before building it. |
 | Hover lift and zoom on every card *(look)* | Hover feedback that suits each element, gated to real pointers. |

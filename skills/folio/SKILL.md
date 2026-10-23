@@ -32,7 +32,9 @@ Nothing is ever invented about the person. Every fact on the page comes from the
 Paths below are relative to this skill's folder (`<skill>`). Work in a project folder: inputs and notes
 go in `work/`, the site's source in `site/` (an Astro project), what gets published in `site/dist/`.
 Scripts need Python 3.9+ (`pypdf`), Node 22.23+ (Node 24 LTS recommended) with npm, and, for the check,
-Playwright with Chromium (`npm i -D playwright && npx playwright install chromium` if missing).
+Playwright with Chromium (`npm i -D playwright && npx playwright install chromium` if missing). With an
+older Node and no way to upgrade, `new_site.mjs` runs itself on Node 24 through `npx`; then run every Node
+command of the site the same way: `npx -y -p node@24 -- npm run build`.
 
 ## The run
 
@@ -46,7 +48,9 @@ python3 <skill>/scripts/extract_cv.py path/to/cv.pdf --out work
 
 This writes `work/cv.txt` (the text, in reading order), `work/links.json` (every link in the PDF),
 `work/images/` (embedded pictures; the largest portrait one is usually the photo) and
-`work/profile.json`, an empty skeleton. Read `cv.txt` whole, then fill `profile.json` following
+`work/profile.json`, an empty skeleton. If it prints `LINK LOST` (the CV names LinkedIn, GitHub or a
+portfolio but the PDF holds no address, as with « Microsoft Print To PDF »), ask the person for the URL
+with your other questions; never guess it. Read `cv.txt` whole, then fill `profile.json` following
 `references/content-model.md`. A DOCX or pasted text: save it as `work/cv.txt` and fill the profile the
 same way.
 
@@ -166,7 +170,8 @@ node <skill>/scripts/new_site.mjs site
 ```
 
 It copies `<skill>/assets/site-template` (Astro, React, Tailwind, Motion, ready for Cult UI) to `site/`
-and installs it. It refuses Node older than 22.23: `node -v`, then `nvm install 24` (or nodejs.org). Then fetch the faces the sheet names; the site hosts its own fonts (faster, no third
+and installs it. With Node older than 22.23 it fetches Node 24 through `npx` and says how to build with
+it (or upgrade: `nvm install 24`, or nodejs.org). Then fetch the faces the sheet names; the site hosts its own fonts (faster, no third
 party, and no transfer of visitors' IP addresses to Google, which European courts have held against
 sites using Google Fonts):
 
@@ -223,8 +228,11 @@ Order of work:
    none of it only inside a client island. The head comes from step 9.
 
 Read `references/rules.md` before building: it is the full list of house rules and generated-portfolio
-tells, and §7 covers the stack. Lay out sections with `.cols` (12 columns, 4 on the phone) and
-`col-span-*`; Tailwind's `grid` is a plain `display: grid` for anything else. The short form is the table below. Build with `npm run build` in `site/`;
+tells, and §7 covers the stack. Lay out sections with `.cols` (12 columns from 768px, 4 below, the same
+breakpoint as Tailwind's `md:`): write `col-span-full md:col-span-6`, never a bare `col-span-4` meant for
+the phone, which is a third of the width on a tablet. Tailwind's `grid` is a plain `display: grid` for
+anything else. Job titles as written are often long ("Responsable paie & administration du personnel"):
+set roles at `text-lead` and keep `text-head` for section headings, so every headline stays on two lines. The short form is the table below. Build with `npm run build` in `site/`;
 it writes `site/dist/`.
 
 ### 9. SEO
@@ -244,7 +252,8 @@ card, theme-color, favicon, and a schema.org `Person` in JSON-LD holding only th
 `site/public/robots.txt`, `sitemap.xml` (skipped with `--noindex`) and `favicon.svg`. Unknown address:
 pass `https://SITE_URL` and replace it at publication. Pass `--description` with one sentence from
 `work/copy.md` (70–160 characters, the name, the job, the city, what they look for): the default built
-from `looking_for` is a fallback, not copy. Then pass the one or two font files the first
+from `looking_for` is a fallback, not copy. If the city is a village nobody searches, pass `--place "près de Tours"`
+(the title says it; the JSON-LD keeps the real city). Then pass the one or two font files the first
 screen uses to the layout: `<Base lang="fr" preload={["/fonts/<file>.woff2"]}>`. `references/seo.md` has
 the rules and what never to do (keyword lists, hidden text, fake ratings, private fields in the JSON-LD).
 
@@ -265,7 +274,7 @@ fonts that failed to load, horizontal overflow, text under 13px, contrast, gradi
 monospace, tracked capitals, emoji, skill bars and stars, thin outlined boxes, banned palettes, overused
 faces, banned phrases, French spacing before `; : ! ?`, sections without headings, half-empty sections,
 text on top of text, words broken in the middle, neighbouring sections with the same layout, empty
-stretches over half a screen, a page with fewer than two drawings or two fields, no scroll move,
+stretches over half a screen, a page with fewer than two drawings or two fields, too much motion,
 the SEO head (title, description, canonical, absolute `og:image`, JSON-LD `Person` with no private
 field, heading order, image dimensions, font preload, theme-color, zoom not locked), the page with
 JavaScript off (the text must be in the HTML), and the weight of the JavaScript.
@@ -281,29 +290,32 @@ it lists (desktop, tablet, phone; first screen and full page) and critique them 
 `references/critique.md`. Write the critique down in its format, fix the top three problems, check
 again, look again. Three rounds at most. Judge only the pictures.
 
-### 12. Move
+### 12. Move, a little
 
-Motion is part of the design, not a garnish: a visitor should feel the page answer the scroll. Three
-layers, all from the sheet and `references/motion.md`:
+Motion is a finish, not a layer cake. A personal page is read: most of it holds still, and what moves
+moves once. People who tried the earlier, busier pages found them tiring. From the sheet and
+`references/motion.md`, at most:
 
 1. **On load, the signature move** from the sheet, once (the name settling, the artefact filled in, the
-   route drawing). With the first screen's parts entering in one stagger (`data-stagger`, 40–80 ms).
-2. **With the scroll, the sheet's scroll move.** Mark the block `data-scroll`; `base.js` gives it `--p`
-   (0 → 1 while it crosses the screen) and `--pe` (0 → 1 as it enters). Tie the motif to them with the
-   helpers in `base.css`: `.scroll-draw` (an SVG drawn as you scroll), `.scroll-grow` (a bar that fills),
-   `.scroll-x` / `.scroll-x-rev` (display type sliding against the scroll), `.scroll-y`, `.scroll-turn`,
-   and `.pin` (a heading that stays while its chapter scrolls under it). At least the motif and one
-   display line move with the scroll.
-3. **Entrances and feedback.** Headings that rise line by line out of a mask (`data-reveal="lines"`),
-   blocks that rise 12–24 px once (`data-reveal`), press feedback on buttons, link underlines that grow,
-   hover gated behind `(hover: hover) and (pointer: fine)`.
+   route drawing). The first screen's parts may enter in one stagger (`data-stagger`, 40–80 ms).
+2. **Section headings that rise once** as their section arrives (`data-reveal` or
+   `data-reveal="lines"` on the `h2`). Not on every paragraph, row, list item or picture.
+3. **One live thing** from step 8 (a figure that counts, a route that draws, rows that open), and press
+   feedback on buttons, link underlines that grow, hover gated behind `(hover: hover) and (pointer: fine)`.
+4. **Optional: one scroll-linked move**, only if it carries the motif (a route drawn as you scroll, a
+   period bar that fills: `data-scroll` with `.scroll-draw` or `.scroll-grow`, see `base.css`). No display
+   type sliding with the scroll, no pinned chapters, no second scroll move. A page with none is fine.
+
+Never put a scroll helper (`.scroll-x`, `.scroll-y`…) and `data-reveal` on the same element: both set
+`transform`, and one cancels the other. Put the scroll move on a wrapper.
 
 Transform, opacity, clip-path and SVG strokes only; ease-out curves, under 300 ms for interface feedback.
 Scroll-linked rules always fall back to the finished state (`var(--pe, 1)`), so the page is complete
 without script and under `prefers-reduced-motion`, where nothing is set. Text never fades out with the
-scroll. Rebuild and check again afterwards: a reveal that did not fire is a blank band in the screenshot.
-Then record a few seconds of the page scrolling if you can (Playwright `recordVideo`) and watch it: the
-screenshots do not show motion.
+scroll. Rebuild and check again afterwards: a reveal that did not fire is a blank band in the screenshot,
+and the check warns when the page moves too much. Then record the page scrolling
+(`node <skill>/scripts/check_site.mjs site/dist --video --out work/check`) and watch it: the screenshots do
+not show motion. If you notice the motion before the content, take some away.
 
 ### 13. The announcement kit
 
@@ -353,7 +365,7 @@ The style rules below are the default; a page may break one of them on purpose (
 | **No overused faces** (Inter, Poppins, Montserrat, Space Grotesk, Playfair, Fraunces, Instrument Serif…) | The dealt type system, self-hosted |
 | **Two typefaces at most, five sizes at most**, body text 16px or more in full ink | Scale contrast does the work |
 | **No empty page:** the motif in three sections, two full-width fields, no two neighbouring sections alike, nothing blank over half a screen | The person's material (ask for more), the motif, one thing at display scale per section |
-| **The page answers the scroll:** one load move, one scroll move, entrances | `data-scroll` and the helpers in `base.css`; never at the cost of text without script |
+| **Motion, a little:** one load move, headings that rise once, one live thing; one scroll move at most, optional | Most of the page holds still; never at the cost of text without script |
 | **Equal outer margins; no section with half the width empty; a heading on every section** | Close every void with the section's content |
 | **No invented facts, proof, testimonials, logos or numbers** *(look)* | What the CV says, set well |
 | **No generated-voice copy** ("passionné", "dynamique", "n'hésitez pas", "unlock", "seamless", "Bienvenue sur mon portfolio") | Specific nouns and real numbers |

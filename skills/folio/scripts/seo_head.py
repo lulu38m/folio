@@ -29,6 +29,7 @@ def main():
     ap.add_argument("--out", default="site/public", help="folder for robots.txt, sitemap.xml, favicon.svg")
     ap.add_argument("--head", help="file for the head block (default <out>/seo-head.html); site/src/seo-head.html for the Astro site")
     ap.add_argument("--job", help="short job title for the <title>, as the page says it")
+    ap.add_argument("--place", help='where, as the title says it, when the city is a village nobody searches: "près de Tours", "near Lyon"')
     ap.add_argument("--description", help="meta description (one sentence, 70-160 characters)")
     ap.add_argument("--bg", default="#FFFFFF", help="ground colour of the first screen (theme-color, favicon)")
     ap.add_argument("--ink", default="#000000", help="ink colour for the favicon initials")
@@ -50,17 +51,19 @@ def main():
     privacy = p.get("privacy", {})
     indexable = not a.noindex and privacy.get("indexable", True)
 
+    # The title and the default description say where; the JSON-LD keeps the real city.
+    where = a.place or ((f"à {city}" if lang == "fr" else f"in {city}") if city else "")
     if lang == "fr":
-        title = f"{name}, {lower_first(job)}" + (f" à {city}" if city else "")
+        title = f"{name}, {lower_first(job)}" + (f" {where}" if where else "")
     else:
-        title = f"{name}, {job}" + (f" in {city}" if city else "")
+        title = f"{name}, {job}" + (f" {where}" if where else "")
     desc = a.description
     if not desc:
         look = (p.get("looking_for") or "").rstrip(".")
         if lang == "fr":
-            desc = f"{name}, {lower_first(job)}" + (f" à {city}" if city else "") + "." + (f" Cherche : {lower_first(look)}." if look else "")
+            desc = f"{name}, {lower_first(job)}" + (f" {where}" if where else "") + "." + (f" Cherche : {lower_first(look)}." if look else "")
         else:
-            desc = f"{name}, {job}" + (f" in {city}" if city else "") + "." + (f" Looking for: {look}." if look else "")
+            desc = f"{name}, {job}" + (f" {where}" if where else "") + "." + (f" Looking for: {look}." if look else "")
     warnings = []
     if len(title) > 60:
         warnings.append(f"title is {len(title)} characters (60 max): pass a shorter --job")

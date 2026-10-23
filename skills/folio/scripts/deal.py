@@ -151,7 +151,7 @@ def sheet(p, did, rt, rp, seed):
         out.append(f"- **{role}**: {shape}")
     out += ["", "## Motif (draw it, then bring it back in at least three sections)", d["motif"], "",
             "## Signature move", d["signature"], "",
-            "## Scroll move (one, tied to scroll; see references/motion.md §Scroll)", d["scroll"], "",
+            "## Scroll move (optional, one at most, on the motif; see references/motion.md §Scroll)", d["scroll"], "",
             "## The live thing (pick one)"] + [f"- {x}" for x in d["live"]] + ["",
             "## How this direction fails", d["fails"], "",
             f"Redraws used: type {rt}, palette {rp}. Record any redraw and its reason in work/notes.md."]

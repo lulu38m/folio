@@ -5,6 +5,7 @@
 //   node check_site.mjs site/dist --announce --out site/public      (renders /announce/ to announce.png, 1200x627)
 //   node check_site.mjs some/page.html --out work/check             (a single HTML file still works)
 //   node check_site.mjs site/dist --allow gradient --out work/check (the page's one deliberate break, rules.md §8)
+//   node check_site.mjs site/dist --video --out work/check          (records desktop.webm and phone.webm scrolling the page, to watch the motion)
 // Needs Playwright with Chromium: npm i -D playwright && npx playwright install chromium
 import { mkdirSync, writeFileSync, existsSync, readFileSync, statSync } from "node:fs";
 import { resolve, join, dirname, extname, normalize } from "node:path";
@@ -27,6 +28,7 @@ const target = args.find((a) => !a.startsWith("--") && !["--out", "--allow"].inc
 const outIdx = args.indexOf("--out");
 const out = resolve(outIdx >= 0 ? args[outIdx + 1] : "work/check");
 const announce = args.includes("--announce");
+const video = args.includes("--video");
 // Style FAILs end with a [tag]. One of them may be the page's deliberate break (rules.md §8): it is then
 // reported as ALLOWED. Honesty, privacy, legibility and the stack are never tagged, so never allowed.
 const BREAKS = ["gradient", "shadow", "blur", "eyebrow", "gauge", "palette", "emoji", "layout"];
@@ -35,7 +37,7 @@ const allow = allowIdx >= 0 ? args[allowIdx + 1] : null;
 if (allowIdx >= 0 && (!BREAKS.includes(allow) || args.filter((a) => a === "--allow").length > 1)) {
   console.error(`--allow takes one of: ${BREAKS.join(", ")} (one break per page, rules.md §8)`); process.exit(1);
 }
-if (!target || !existsSync(target)) { console.error("usage: check_site.mjs <site/dist | page.html> [--out dir] [--announce]"); process.exit(1); }
+if (!target || !existsSync(target)) { console.error("usage: check_site.mjs <site/dist | page.html> [--out dir] [--announce | --video] [--allow tag]"); process.exit(1); }
 mkdirSync(out, { recursive: true });
 
 // A built site (a folder) is served over http on a free local port: its asset paths are absolute (/_astro/…).
@@ -63,6 +65,29 @@ const { chromium } = await loadPlaywright();
 const launchOpts = {};
 if (process.env.FOLIO_CHROMIUM) launchOpts.executablePath = process.env.FOLIO_CHROMIUM;
 const browser = await chromium.launch(launchOpts);
+
+if (video) {
+  // A slow scroll from top to bottom at desktop and phone width, saved as webm: the screenshots do not show motion.
+  const { renameSync, readdirSync, rmSync } = await import("node:fs");
+  for (const [name, width, height] of [["desktop", 1440, 900], ["phone", 390, 844]]) {
+    const dir = join(out, `.video-${name}`);
+    const ctx = await browser.newContext({ viewport: { width, height }, recordVideo: { dir, size: { width, height } } });
+    const page = await ctx.newPage();
+    await page.goto(url, { waitUntil: "load" });
+    await page.evaluate(() => document.fonts.ready);
+    await page.waitForTimeout(1800);
+    const H = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+    for (let y = 0; y <= H; y += 9) { await page.evaluate((yy) => scrollTo(0, yy), y); await page.waitForTimeout(28); }
+    await page.waitForTimeout(1200);
+    await ctx.close();
+    const f = readdirSync(dir).find((n) => n.endsWith(".webm"));
+    renameSync(join(dir, f), join(out, `${name}.webm`)); rmSync(dir, { recursive: true, force: true });
+  }
+  console.log(`wrote ${join(out, "desktop.webm")} and phone.webm: watch them; if the motion is what you notice first, take some away`);
+  await browser.close();
+  server?.close();
+  process.exit(0);
+}
 
 if (announce) {
   const page = await browser.newPage({ viewport: { width: 1200, height: 627 }, deviceScaleFactor: 1 });
@@ -289,10 +314,18 @@ const measure = () => {
     }
   }
 
+  // Section headings no larger than the text they announce (Tailwind's preflight resets h2 to the body size)
+  {
+    const bodyPx = parseFloat(cs(document.body).fontSize);
+    const small = [...document.querySelectorAll("h2")].filter(visible).filter((h) => parseFloat(cs(h).fontSize) < bodyPx * 1.25);
+    if (small.length) W(`${small.length} h2 at only ${Math.round(parseFloat(cs(small[0]).fontSize))}px for ${Math.round(bodyPx)}px body text ("${small[0].textContent.trim().slice(0, 30)}"): set it at text-head`);
+  }
+
   // Collisions: text boxes that overlap other text (a grid class gone wrong, a negative margin, a pinned block)
   {
     // Block-level boxes only: an inline link wrapping over two lines has a box that covers its neighbours.
-    const leaves = textEls.filter((el) => !el.closest("svg,[aria-hidden=true],[data-overlap]") && cs(el).position !== "fixed" && !/^inline/.test(cs(el).display))
+    // Decorative text (aria-hidden) counts too: a huge year or word set over a list is still a visible collision.
+    const leaves = textEls.filter((el) => !el.closest("svg,[data-overlap]") && cs(el).position !== "fixed" && !/^inline/.test(cs(el).display))
       .map((el) => ({ el, r: el.getBoundingClientRect() })).filter(({ r }) => r.width > 4 && r.height > 4);
     let hits = 0; const ex = [];
     for (let i = 0; i < leaves.length; i++) for (let j = i + 1; j < leaves.length; j++) {
@@ -359,7 +392,12 @@ const measure = () => {
 
   // Motion: the page should move a little, with the scroll as well as on load
   R.info.motion = { reveals: document.querySelectorAll("[data-reveal]").length, scroll: document.querySelectorAll("[data-scroll]").length, islands: document.querySelectorAll("astro-island").length };
-  if (vw >= 1200 && !R.info.motion.scroll && !R.info.motion.islands) W("no scroll move: tie the sheet's motif to the scroll (data-scroll, motion.md §Scroll)");
+  // Too much motion tires the reader (SKILL.md step 12): headings that rise once, one scroll move at most.
+  if (vw >= 1200) {
+    const reveals = R.info.motion.reveals, moving = document.querySelectorAll(".scroll-x,.scroll-x-rev,.scroll-y,.scroll-turn,.pin").length;
+    if (reveals > 14) W(`${reveals} entrances (data-reveal): keep them for the section headings and the first screen, not every row`);
+    if (R.info.motion.scroll > 2 || moving > 2) W(`${R.info.motion.scroll} scroll-linked block(s), ${moving} sliding, turning or pinned element(s): one scroll move at most, on the motif`);
+  }
 
   // Hidden content (reveals that did not fire)
   const hidden = textEls.filter((el) => { let e = el; while (e && e !== document.body) { if (parseFloat(cs(e).opacity) < 0.05) return true; e = e.parentElement; } return false; });
@@ -430,7 +468,8 @@ const measure = () => {
     if (noDims) W(`seo: ${noDims} image(s) without width and height attributes (layout shift)`);
     if (document.fonts.size && !document.querySelector('link[rel="preload"][as="font"]')) W("seo: no font preload for the first screen (link rel=preload as=font)");
     // theme-color and dark pages
-    const tc = meta('meta[name="theme-color"]');
+    // Read as the page loaded: a theme-color that follows the scroll (the chapitres sheet) has moved on by now.
+    const tc = window.__folioThemeTop ?? meta('meta[name="theme-color"]');
     const firstBlock = ["main > section", "body > section", "header", "main"].map((q) => document.querySelector(q)).find(Boolean) || document.body;
     const fb = bgOf(firstBlock) || bodyBg;
     if (tc && /^#[0-9a-f]{6}$/i.test(tc)) {
@@ -463,6 +502,7 @@ for (const v of viewports) {
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(1600); // let the load sequence finish before the first-screen picture
   await page.screenshot({ path: join(out, `${v.name}-fold.png`) });
+  await page.evaluate(() => { window.__folioThemeTop = document.querySelector('meta[name="theme-color"]')?.getAttribute("content") ?? null; });
   const foldHidden = await page.evaluate(() => [...document.querySelectorAll("body *")].filter((el) => {
     const r = el.getBoundingClientRect(); if (r.top >= innerHeight || r.bottom <= 0 || r.width === 0) return false;
     if (![...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1)) return false;
