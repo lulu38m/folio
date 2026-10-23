@@ -5,6 +5,17 @@ being produced by default, for everyone, without a reason. Recruiters now recogn
 read the name. Each rule says what to do instead. *(check)* means `check_site.mjs` measures it;
 *(look)* means you check it in the screenshots.
 
+The rules come in two levels:
+
+- **Blocking**: honesty, privacy, the frame (legibility, contrast, one `h1`, nothing hidden) and the
+  stack (§4 to §7). A FAIL here is never negotiable.
+- **Style**: the tells (§1 to §3). They are the default, not a law. A page may break **one** of them on
+  purpose (§8). The smaller ones (monospace, thin rules, soft radius, centring) are only warnings: keep
+  one if you can defend it in one sentence in `work/notes.md`.
+
+The aim is a page that could only be this person's, not a page that avoids every risk. A rule followed
+everywhere gives a sober page; a sober page is not yet a good one.
+
 ## 1. Portfolio and CV tells (specific to this skill)
 
 | Tell | Instead |
@@ -105,3 +116,21 @@ The site is Astro with React islands (`SKILL.md` step 8). The stack adds possibi
 - Tailwind's default shadows, blurs, rings and soft radii are not used; utilities reference the tokens
   (`bg-bg`, `text-ink`, `bg-accent`), never raw palette classes (`bg-slate-900`, `text-violet-500`).
 - No UI kit look: no shadcn default theme, no Card/Badge/Avatar components as they ship.
+
+## 8. One deliberate break
+
+A page may break one style rule (§1 to §3) when the break says something true about the person that
+the rule would hide. A pilot's page with a real instrument gauge for a figure from the CV, a developer's
+page set in monospace because code is their material, a beauty-industry page in a soft gradient taken
+from their own work, a night-shift nurse's page on a near-black ground with one signal colour.
+
+- **One break per page**, chosen at step 5 with the direction, not to rescue a failing check.
+- **Written down**: in `work/notes.md`, the rule broken, the fact from the CV or the person that
+  justifies it, and how it shows on the page. One sentence each.
+- **Done fully**: a break done timidly reads as a mistake. If it is the gradient, it is a real field of
+  colour, not a faint tint.
+- **Checked**: `check_site.mjs --allow <tag>` reports that FAIL as ALLOWED (tags: `gradient`, `shadow`,
+  `blur`, `eyebrow`, `gauge`, `palette`, `emoji`, `layout`). Every other FAIL still counts.
+- **Never a break**: anything in §4 to §7 (honesty, privacy, legibility, the stack), invented content,
+  stock faces, the typing effect, rotating titles, a fake testimonial. A gauge for a real figure is
+  allowed; a gauge rating a skill is not.

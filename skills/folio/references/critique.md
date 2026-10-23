@@ -65,9 +65,11 @@ score it again as the juror who did not build it.
 
 ## Caps (override the arithmetic)
 
-- Any FAIL left: overall ≤ 6.0.
+- Any FAIL left: overall ≤ 6.0. An `ALLOWED` break is not a FAIL; judge it instead: if it does not say
+  something true about the person, or is done timidly, it counts as the tell it is (the cap below).
 - A headline of three lines anywhere, an eyebrow, monospace labels, 01/02/03, a gradient, a shadow at
-  rest, a hairline, a skill bar, a timeline with dots: overall ≤ 6.5.
+  rest, a hairline, a skill bar, a timeline with dots: overall ≤ 6.5, unless it is the page's one
+  deliberate break (`rules.md` §8) and the break is defended in `work/notes.md` and done fully.
 - Pass 3 fails (the page could be another person's): creativity ≤ 6.
 - A section with half its width empty, unequal margins, or a blank stretch over half a screen: design
   ≤ 6.5.

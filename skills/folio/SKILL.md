@@ -141,6 +141,11 @@ Then write the idea in the notes and do not build until both blanks are filled f
 **The colleague test:** put another person in the same job in the sentence. If it still works, the
 idea belongs to the job, not to the person. Go back to the inventory.
 
+**One deliberate break, if it earns it.** The house rules are the default. If one style rule hides
+something true about this person (monospace for a developer whose material is code, a real gauge for a
+pilot's figure), the page may break that one rule. Decide it now, write the rule, the reason and how it
+shows in `work/notes.md`, and do it fully (`references/rules.md` §8). Most pages need none.
+
 ### 6. Write the words
 
 Write the whole page as plain text in `work/copy.md` before any markup, in the CV's language,
@@ -265,7 +270,9 @@ the SEO head (title, description, canonical, absolute `og:image`, JSON-LD `Perso
 field, heading order, image dimensions, font preload, theme-color, zoom not locked), the page with
 JavaScript off (the text must be in the HTML), and the weight of the JavaScript.
 Fix every `FAIL`. Treat every `WARN` as wrong unless you can defend it in one sentence. Rebuild before
-every check: it reads `dist/`, not the source.
+every check: it reads `dist/`, not the source. If the page makes its one deliberate break
+(`references/rules.md` §8), pass its tag (`--allow gradient`, `--allow gauge`…): that FAIL is reported as
+`ALLOWED`; the break and its reason must already be in `work/notes.md`.
 
 ### 11. Look
 
@@ -327,6 +334,8 @@ and what still falls short. Do not claim a check you did not run.
 ## House rules
 
 Measured by `check_site.mjs` unless marked *(look)*. Full list and reasons in `references/rules.md`.
+The style rules below are the default; a page may break one of them on purpose (`references/rules.md`
+§8). Honesty, privacy and legibility have no exception.
 
 | Rule | Instead |
 | --- | --- |

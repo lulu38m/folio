@@ -4,6 +4,7 @@
 //   node check_site.mjs site/dist --out work/check                  (the built Astro site, served locally)
 //   node check_site.mjs site/dist --announce --out site/public      (renders /announce/ to announce.png, 1200x627)
 //   node check_site.mjs some/page.html --out work/check             (a single HTML file still works)
+//   node check_site.mjs site/dist --allow gradient --out work/check (the page's one deliberate break, rules.md §8)
 // Needs Playwright with Chromium: npm i -D playwright && npx playwright install chromium
 import { mkdirSync, writeFileSync, existsSync, readFileSync, statSync } from "node:fs";
 import { resolve, join, dirname, extname, normalize } from "node:path";
@@ -22,10 +23,18 @@ async function loadPlaywright() {
 }
 
 const args = process.argv.slice(2);
-const target = args.find((a) => !a.startsWith("--") && args[args.indexOf(a) - 1] !== "--out");
+const target = args.find((a) => !a.startsWith("--") && !["--out", "--allow"].includes(args[args.indexOf(a) - 1]));
 const outIdx = args.indexOf("--out");
 const out = resolve(outIdx >= 0 ? args[outIdx + 1] : "work/check");
 const announce = args.includes("--announce");
+// Style FAILs end with a [tag]. One of them may be the page's deliberate break (rules.md §8): it is then
+// reported as ALLOWED. Honesty, privacy, legibility and the stack are never tagged, so never allowed.
+const BREAKS = ["gradient", "shadow", "blur", "eyebrow", "gauge", "palette", "emoji", "layout"];
+const allowIdx = args.indexOf("--allow");
+const allow = allowIdx >= 0 ? args[allowIdx + 1] : null;
+if (allowIdx >= 0 && (!BREAKS.includes(allow) || args.filter((a) => a === "--allow").length > 1)) {
+  console.error(`--allow takes one of: ${BREAKS.join(", ")} (one break per page, rules.md §8)`); process.exit(1);
+}
 if (!target || !existsSync(target)) { console.error("usage: check_site.mjs <site/dist | page.html> [--out dir] [--announce]"); process.exit(1); }
 mkdirSync(out, { recursive: true });
 
@@ -82,6 +91,7 @@ const viewports = [
 const measure = () => {
   const R = { fail: [], warn: [], info: {} };
   const F = (m) => R.fail.push(m), W = (m) => R.warn.push(m);
+  const T = (tag, m) => R.fail.push(`${m} [${tag}]`); // a style FAIL, the one kind a deliberate break can lift
   const vw = innerWidth, vh = innerHeight;
   const cs = (el) => getComputedStyle(el);
   const visible = (el) => { const s = cs(el); const r = el.getBoundingClientRect(); return s.display !== "none" && s.visibility !== "hidden" && r.width > 0 && r.height > 0; };
@@ -187,25 +197,24 @@ const measure = () => {
     const filled = (parse(s.backgroundColor) || { a: 0 }).a > 0 || parseFloat(s.borderTopWidth) > 0;
     if (filled && rad >= 6 && rad <= 20 && el.getBoundingClientRect().width > 120) soft++;
   }
-  if (grad) F(`gradients: ${grad} element(s) (flat colour; a scrim over a photo must carry data-scrim)`);
-  if (gradText) F(`gradient text: ${gradText}`);
-  if (shadow) F(`shadows or glows on ${shadow} element(s) at rest (only things that float, marked data-floats)`);
-  if (blur) F(`blur or glass on ${blur} element(s)`);
-  if (mono) F(`monospace outside code: ${mono} element(s)`);
-  if (caps >= 2) F(`tracked uppercase labels: ${caps} (eyebrows; put the words in the heading or the sentence)`);
+  if (grad) T("gradient", `gradients: ${grad} element(s) (flat colour; a scrim over a photo must carry data-scrim)`);
+  if (gradText) T("gradient", `gradient text: ${gradText}`);
+  if (shadow) T("shadow", `shadows or glows on ${shadow} element(s) at rest (only things that float, marked data-floats)`);
+  if (blur) T("blur", `blur or glass on ${blur} element(s)`);
+  if (mono) W(`monospace outside code: ${mono} element(s) (defend it in one sentence: real code, a terminal in the person's world)`);
+  if (caps >= 2) T("eyebrow", `tracked uppercase labels: ${caps} (eyebrows; put the words in the heading or the sentence)`);
   else if (caps === 1) W("one tracked uppercase label");
-  if (hair >= 3) F(`thin rules or outlined boxes: ${hair} element(s) (space, tone steps, filled shapes instead; lines only inside real tables)`);
-  else if (hair) W(`thin rule or outline: ${hair} element(s)`);
+  if (hair) W(`thin rules or outlined boxes: ${hair} element(s) (space, tone steps, filled shapes instead, unless lines are the idea)`);
   if (soft >= 4) W(`soft medium radius on ${soft} boxes (square or fully round, chosen once)`);
 
   // CV-specific tells
-  if (document.querySelector("progress,meter,[role=progressbar]")) F("skill bars / gauges (progress, meter or progressbar): use words");
+  if (document.querySelector("progress,meter,[role=progressbar]")) T("gauge", "skill bars / gauges (progress, meter or progressbar): use words");
   const body = document.body.innerText;
-  if (/[★☆✦✩⭐●○◉◯]{3,}/.test(body)) F("star or dot ratings in text: use words (CECRL level, years, context)");
+  if (/[★☆✦✩⭐●○◉◯]{3,}/.test(body)) T("gauge", "star or dot ratings in text: use words (CECRL level, years, context)");
   const pctSkills = (body.match(/\b\d{2,3}\s?%/g) || []).length;
   if (pctSkills >= 4) W(`${pctSkills} percentages on the page: if they rate skills, remove them`);
   const emoji = (body.match(/\p{Extended_Pictographic}/gu) || []).filter((c) => !"©®™".includes(c));
-  if (emoji.length) F(`emoji in the page: ${[...new Set(emoji)].join(" ")}`);
+  if (emoji.length) T("emoji", `emoji in the page: ${[...new Set(emoji)].join(" ")}`);
 
   // Copy
   const banned = [
@@ -255,11 +264,11 @@ const measure = () => {
       if (x.s > 60 && x.l > 45 && x.l < 75 && ((x.h > 60 && x.h < 170) || (x.h >= 170 && x.h < 200) || x.h < 15 || x.h > 345)) neon++;
     }
   }
-  if (cream && terracotta) F("assistant palette: cream ground with terracotta/rust");
+  if (cream && terracotta) T("palette", "assistant palette: cream ground with terracotta/rust");
   else if (cream) W("yellow-cream ground: warmth from a low-chroma stone or a full field instead");
   if (terracotta > 2 && !cream) W("terracotta/rust accent: a colour of generated pages");
-  if (violet) F(`violet or indigo colour on ${violet} element(s)`);
-  if (lum(bodyBg) < 0.03 && neon >= 1) F("near-black ground with an acid or neon accent (a generated look): use the dealt palette or redraw");
+  if (violet) T("palette", `violet or indigo colour on ${violet} element(s)`);
+  if (lum(bodyBg) < 0.03 && neon >= 1) T("palette", "near-black ground with an acid or neon accent (a generated look): use the dealt palette or redraw");
 
   // Centring
   const blocks = textEls.filter((el) => /^(P|H1|H2|H3|LI|BLOCKQUOTE)$/.test(el.tagName));
@@ -333,7 +342,7 @@ const measure = () => {
     let run = 1, worst = 1;
     for (let i = 1; i < shapes.length; i++) { run = shapes[i].key === shapes[i - 1].key ? run + 1 : 1; worst = Math.max(worst, run); }
     R.info.layouts = shapes.map((x) => x.key);
-    if (worst >= 3) F(`${worst} sections in a row with the same layout (${shapes.map((x) => x.key.split("/")[0]).join(", ")}): give each section the shape the sheet deals for its role`);
+    if (worst >= 3) T("layout", `${worst} sections in a row with the same layout (${shapes.map((x) => x.key.split("/")[0]).join(", ")}): give each section the shape the sheet deals for its role`);
     else if (worst === 2) W(`two neighbouring sections share a layout (${shapes.map((x) => x.key.split("/")[0]).join(", ")})`);
     const withPic = shapes.filter((x) => x.pic).length, fields = shapes.filter((x) => x.field).length;
     if (secs.length >= 4 && withPic < 2) W(`only ${withPic} section(s) carry a picture or a drawing: draw the sheet's motif from the person's world and bring it back`);
@@ -508,12 +517,15 @@ await browser.close();
 server?.close();
 writeFileSync(join(out, "report.json"), JSON.stringify(report, null, 2));
 
-let totalF = 0, totalW = 0;
+let totalF = 0, totalW = 0, totalA = 0;
 for (const [name, r] of Object.entries(report.viewports)) {
   console.log(`\n== ${name} ==  margins ${r.info.margins?.join("/") ?? "?"}px · sizes ${r.info.sizes?.join(",")} · faces ${Object.keys(r.info.families || {}).join(", ")}${r.info.jsKB != null ? ` · JS ${r.info.jsKB} KB` : ""}`);
-  for (const m of [...new Set(r.fail)]) { console.log("FAIL", m); totalF++; }
+  for (const m of [...new Set(r.fail)]) {
+    if (allow && m.endsWith(`[${allow}]`)) { console.log("ALLOWED", m); totalA++; }
+    else { console.log("FAIL", m); totalF++; }
+  }
   for (const m of [...new Set(r.warn)]) { console.log("WARN", m); totalW++; }
 }
-console.log(`\n${totalF} FAIL, ${totalW} WARN. Screenshots in ${out}: ${viewports.map((v) => `${v.name}-fold.png, ${v.name}-full.png`).join("; ")}`);
+console.log(`\n${totalF} FAIL, ${totalW} WARN${allow ? `, ${totalA} ALLOWED (${allow}: defend it in work/notes.md)` : ""}. Screenshots in ${out}: ${viewports.map((v) => `${v.name}-fold.png, ${v.name}-full.png`).join("; ")}`);
 console.log("Now look at every screenshot and critique it (references/critique.md). Passing is not the same as good.");
 process.exit(totalF ? 2 : 0);
