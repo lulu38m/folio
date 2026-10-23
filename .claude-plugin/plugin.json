@@ -1,7 +1,7 @@
 {
   "name": "folio",
   "description": "Turn a CV into a personal website that looks designed for that one person, not generated.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Lucas Moreau"
   },
