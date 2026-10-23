@@ -1,0 +1,1145 @@
+{
+  "type_systems": {
+    "schibsted-solo": {
+      "name": "Schibsted Grotesk, alone",
+      "mood": "assertive grotesk, newsroom confidence",
+      "fetch": [
+        "Schibsted Grotesk:400,600,800"
+      ],
+      "display": {
+        "family": "Schibsted Grotesk",
+        "weight": 800,
+        "tracking": "-0.045em",
+        "leading": 0.92
+      },
+      "text": {
+        "family": "Schibsted Grotesk",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "\"Helvetica Neue\", Arial, sans-serif"
+    },
+    "literata-atkinson": {
+      "name": "Literata display, Atkinson Hyperlegible text",
+      "mood": "warm serif headings over the most legible text face there is",
+      "fetch": [
+        "Literata:500,600",
+        "Atkinson Hyperlegible:400,700"
+      ],
+      "display": {
+        "family": "Literata",
+        "weight": 600,
+        "tracking": "-0.025em",
+        "leading": 1.0
+      },
+      "text": {
+        "family": "Atkinson Hyperlegible",
+        "weight": 400,
+        "strong": 700
+      },
+      "fallback": "Georgia, serif / Verdana, sans-serif"
+    },
+    "archivo-solo": {
+      "name": "Archivo, alone, heavy display",
+      "mood": "industrial, sturdy, plain-spoken",
+      "fetch": [
+        "Archivo:400,600,900"
+      ],
+      "display": {
+        "family": "Archivo",
+        "weight": 900,
+        "tracking": "-0.04em",
+        "leading": 0.9
+      },
+      "text": {
+        "family": "Archivo",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "shoulders-public": {
+      "name": "Big Shoulders Display over Public Sans",
+      "mood": "condensed poster capitals, stadium and street signage",
+      "fetch": [
+        "Big Shoulders Display:800",
+        "Public Sans:400,600"
+      ],
+      "display": {
+        "family": "Big Shoulders Display",
+        "weight": 800,
+        "tracking": "0em",
+        "leading": 0.86,
+        "case": "uppercase allowed for the display line only"
+      },
+      "text": {
+        "family": "Public Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "\"Arial Narrow\", Arial, sans-serif"
+    },
+    "newsreader-solo": {
+      "name": "Newsreader, alone",
+      "mood": "literary, calm, a letter well set",
+      "fetch": [
+        "Newsreader:400,400i,600"
+      ],
+      "display": {
+        "family": "Newsreader",
+        "weight": 400,
+        "tracking": "-0.03em",
+        "leading": 1.0
+      },
+      "text": {
+        "family": "Newsreader",
+        "weight": 400,
+        "strong": 600,
+        "size_bump": "text one step larger than usual: 19–21px"
+      },
+      "fallback": "Georgia, serif"
+    },
+    "gloock-hanken": {
+      "name": "Gloock display, Hanken Grotesk text",
+      "mood": "sharp high-contrast serif, fashion and culture press",
+      "fetch": [
+        "Gloock:400",
+        "Hanken Grotesk:400,600"
+      ],
+      "display": {
+        "family": "Gloock",
+        "weight": 400,
+        "tracking": "-0.02em",
+        "leading": 0.98
+      },
+      "text": {
+        "family": "Hanken Grotesk",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    },
+    "zilla-karla": {
+      "name": "Zilla Slab display, Karla text",
+      "mood": "warm slab, workshop and kitchen, honest",
+      "fetch": [
+        "Zilla Slab:600,700",
+        "Karla:400,700"
+      ],
+      "display": {
+        "family": "Zilla Slab",
+        "weight": 700,
+        "tracking": "-0.02em",
+        "leading": 0.95
+      },
+      "text": {
+        "family": "Karla",
+        "weight": 400,
+        "strong": 700
+      },
+      "fallback": "Rockwell, Georgia, serif / Arial, sans-serif"
+    },
+    "youngserif-albert": {
+      "name": "Young Serif display, Albert Sans text",
+      "mood": "friendly, generous, a little old-fashioned in a good way",
+      "fetch": [
+        "Young Serif:400",
+        "Albert Sans:400,600"
+      ],
+      "display": {
+        "family": "Young Serif",
+        "weight": 400,
+        "tracking": "-0.03em",
+        "leading": 1.0
+      },
+      "text": {
+        "family": "Albert Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    },
+    "plex-condensed": {
+      "name": "IBM Plex Sans Condensed display, IBM Plex Sans text",
+      "mood": "technical, exact, engineering documentation",
+      "fetch": [
+        "IBM Plex Sans Condensed:600",
+        "IBM Plex Sans:400,600"
+      ],
+      "display": {
+        "family": "IBM Plex Sans Condensed",
+        "weight": 600,
+        "tracking": "-0.025em",
+        "leading": 0.95
+      },
+      "text": {
+        "family": "IBM Plex Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "\"Arial Narrow\", Arial, sans-serif"
+    },
+    "funnel": {
+      "name": "Funnel Display over Funnel Sans",
+      "mood": "soft contemporary, approachable, round corners in the letters not the boxes",
+      "fetch": [
+        "Funnel Display:800",
+        "Funnel Sans:400,600"
+      ],
+      "display": {
+        "family": "Funnel Display",
+        "weight": 800,
+        "tracking": "-0.04em",
+        "leading": 0.92
+      },
+      "text": {
+        "family": "Funnel Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "caslon-franklin": {
+      "name": "Libre Caslon Text display, Libre Franklin text",
+      "mood": "classic, institutional, law and finance without the stuffiness",
+      "fetch": [
+        "Libre Caslon Text:400,700",
+        "Libre Franklin:400,600"
+      ],
+      "display": {
+        "family": "Libre Caslon Text",
+        "weight": 700,
+        "tracking": "-0.02em",
+        "leading": 1.02
+      },
+      "text": {
+        "family": "Libre Franklin",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    },
+    "bodoni-chivo": {
+      "name": "Bodoni Moda display, Chivo text",
+      "mood": "luxury, fashion, hospitality at the top end",
+      "fetch": [
+        "Bodoni Moda:400,700",
+        "Chivo:400,600"
+      ],
+      "display": {
+        "family": "Bodoni Moda",
+        "weight": 400,
+        "tracking": "-0.03em",
+        "leading": 0.95
+      },
+      "text": {
+        "family": "Chivo",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Didot, Georgia, serif / Arial, sans-serif"
+    },
+    "darker-rethink": {
+      "name": "Darker Grotesque display, Rethink Sans text",
+      "mood": "compact contemporary display, young and quick",
+      "fetch": [
+        "Darker Grotesque:800",
+        "Rethink Sans:400,600"
+      ],
+      "display": {
+        "family": "Darker Grotesque",
+        "weight": 800,
+        "tracking": "-0.02em",
+        "leading": 0.85
+      },
+      "text": {
+        "family": "Rethink Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "hedvig": {
+      "name": "Hedvig Letters Serif display, Hedvig Letters Sans text",
+      "mood": "quirky, elegant, a designer's choice",
+      "fetch": [
+        "Hedvig Letters Serif:400",
+        "Hedvig Letters Sans:400"
+      ],
+      "display": {
+        "family": "Hedvig Letters Serif",
+        "weight": 400,
+        "tracking": "-0.03em",
+        "leading": 1.0
+      },
+      "text": {
+        "family": "Hedvig Letters Sans",
+        "weight": 400,
+        "strong": 400,
+        "note": "single weight: emphasis by size and colour, never fake bold"
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    },
+    "mona-solo": {
+      "name": "Mona Sans, alone",
+      "mood": "neutral strength, product and engineering",
+      "fetch": [
+        "Mona Sans:400,600,900"
+      ],
+      "display": {
+        "family": "Mona Sans",
+        "weight": 900,
+        "tracking": "-0.04em",
+        "leading": 0.9
+      },
+      "text": {
+        "family": "Mona Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "besley-work": {
+      "name": "Besley display, Work Sans text",
+      "mood": "bold Clarendon warmth, confident and human",
+      "fetch": [
+        "Besley:800",
+        "Work Sans:400,600"
+      ],
+      "display": {
+        "family": "Besley",
+        "weight": 800,
+        "tracking": "-0.03em",
+        "leading": 0.95
+      },
+      "text": {
+        "family": "Work Sans",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    },
+    "redhat-solo": {
+      "name": "Red Hat Display, alone",
+      "mood": "round geometric confidence, friendly but firm",
+      "fetch": [
+        "Red Hat Display:400,500,900"
+      ],
+      "display": {
+        "family": "Red Hat Display",
+        "weight": 900,
+        "tracking": "-0.045em",
+        "leading": 0.9
+      },
+      "text": {
+        "family": "Red Hat Display",
+        "weight": 400,
+        "strong": 500
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "familjen-spectral": {
+      "name": "Familjen Grotesk display, Spectral text",
+      "mood": "inverted editorial: grotesk headings over a reading serif",
+      "fetch": [
+        "Familjen Grotesk:700",
+        "Spectral:400,400i,600"
+      ],
+      "display": {
+        "family": "Familjen Grotesk",
+        "weight": 700,
+        "tracking": "-0.04em",
+        "leading": 0.92
+      },
+      "text": {
+        "family": "Spectral",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif / Georgia, serif"
+    },
+    "host-solo": {
+      "name": "Host Grotesk, alone",
+      "mood": "clean contemporary, quiet confidence",
+      "fetch": [
+        "Host Grotesk:400,600,800"
+      ],
+      "display": {
+        "family": "Host Grotesk",
+        "weight": 800,
+        "tracking": "-0.045em",
+        "leading": 0.92
+      },
+      "text": {
+        "family": "Host Grotesk",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Arial, sans-serif"
+    },
+    "bitter-gantari": {
+      "name": "Bitter display, Gantari text",
+      "mood": "sturdy, practical, public service and trades",
+      "fetch": [
+        "Bitter:700,800",
+        "Gantari:400,600"
+      ],
+      "display": {
+        "family": "Bitter",
+        "weight": 800,
+        "tracking": "-0.03em",
+        "leading": 0.95
+      },
+      "text": {
+        "family": "Gantari",
+        "weight": 400,
+        "strong": 600
+      },
+      "fallback": "Georgia, serif / Arial, sans-serif"
+    }
+  },
+  "palettes": {
+    "stone-forest": {
+      "name": "Stone and forest",
+      "mode": "light",
+      "bg": "#E9E7E2",
+      "surface": "#DDDAD3",
+      "ink": "#16251D",
+      "muted": "#47544C",
+      "accent": "#1E5A3C",
+      "accent_ink": "#F4F3EF"
+    },
+    "paper-cobalt": {
+      "name": "Paper and cobalt",
+      "mode": "light",
+      "bg": "#F7F7F4",
+      "surface": "#ECECE7",
+      "ink": "#0B1A33",
+      "muted": "#47506A",
+      "accent": "#0041A8",
+      "accent_ink": "#FFFFFF"
+    },
+    "night-ochre": {
+      "name": "Night blue and ochre",
+      "mode": "dark",
+      "bg": "#0F1B2C",
+      "surface": "#18263A",
+      "ink": "#E7ECF2",
+      "muted": "#A9B4C4",
+      "accent": "#F0BE4A",
+      "accent_ink": "#0F1B2C"
+    },
+    "sage-field": {
+      "name": "Sage field",
+      "mode": "light",
+      "bg": "#CBD7C5",
+      "surface": "#BDCBB6",
+      "ink": "#122017",
+      "muted": "#33463A",
+      "accent": "#122017",
+      "accent_ink": "#CBD7C5"
+    },
+    "tomato-fields": {
+      "name": "Grey ground with tomato and ink fields",
+      "mode": "light",
+      "fields": true,
+      "bg": "#EFEEEB",
+      "surface": "#E3E1DD",
+      "ink": "#141414",
+      "muted": "#4A4845",
+      "accent": "#C93421",
+      "accent_ink": "#FFFFFF",
+      "field_1": "#C93421",
+      "field_1_ink": "#FFFFFF",
+      "field_2": "#141414",
+      "field_2_ink": "#EFEEEB"
+    },
+    "mustard-fields": {
+      "name": "Neutral ground with mustard and ink fields",
+      "mode": "light",
+      "fields": true,
+      "bg": "#F2F1EE",
+      "surface": "#E6E4DF",
+      "ink": "#1B1A16",
+      "muted": "#4D4B44",
+      "accent": "#1B1A16",
+      "accent_ink": "#F2F1EE",
+      "field_1": "#DDB13A",
+      "field_1_ink": "#1B1A16",
+      "field_2": "#1B1A16",
+      "field_2_ink": "#F2F1EE"
+    },
+    "steel-red": {
+      "name": "Steel grey and signal red",
+      "mode": "light",
+      "bg": "#E4E7EA",
+      "surface": "#D6DADF",
+      "ink": "#0E1216",
+      "muted": "#47505A",
+      "accent": "#C8102E",
+      "accent_ink": "#FFFFFF"
+    },
+    "blush-plum": {
+      "name": "Blush and plum ink",
+      "mode": "light",
+      "fields": true,
+      "bg": "#F4ECEE",
+      "surface": "#EBDDE1",
+      "ink": "#2A1621",
+      "muted": "#5E4652",
+      "accent": "#2A1621",
+      "accent_ink": "#F4ECEE",
+      "field_1": "#E9AFC0",
+      "field_1_ink": "#2A1621"
+    },
+    "harbour": {
+      "name": "Harbour: pale blue and deep navy",
+      "mode": "light",
+      "bg": "#E6EEF4",
+      "surface": "#D7E3EC",
+      "ink": "#0B263A",
+      "muted": "#3B5466",
+      "accent": "#0B6B6B",
+      "accent_ink": "#FFFFFF"
+    },
+    "black-white-blue": {
+      "name": "Black, white and electric blue",
+      "mode": "light",
+      "bg": "#F3F3F1",
+      "surface": "#E6E6E3",
+      "ink": "#000000",
+      "muted": "#4A4A48",
+      "accent": "#0047FF",
+      "accent_ink": "#FFFFFF"
+    },
+    "olive-bone": {
+      "name": "Bone and olive",
+      "mode": "light",
+      "bg": "#E6E5E0",
+      "surface": "#DAD9D1",
+      "ink": "#272B1B",
+      "muted": "#545943",
+      "accent": "#4F5E22",
+      "accent_ink": "#F3F1EA"
+    },
+    "oxblood": {
+      "name": "Pale stone and oxblood",
+      "mode": "light",
+      "fields": true,
+      "bg": "#F1EEEC",
+      "surface": "#E6E1DE",
+      "ink": "#3A0C15",
+      "muted": "#6A4A50",
+      "accent": "#3A0C15",
+      "accent_ink": "#F1EEEC",
+      "field_1": "#3A0C15",
+      "field_1_ink": "#F1EEEC"
+    },
+    "petrol-dark": {
+      "name": "Petrol and pale citron",
+      "mode": "dark",
+      "bg": "#0D2828",
+      "surface": "#143434",
+      "ink": "#E8F1EE",
+      "muted": "#A6BDB7",
+      "accent": "#E4DE8C",
+      "accent_ink": "#0D2828"
+    },
+    "sky-ink": {
+      "name": "Sky field and deep ink",
+      "mode": "light",
+      "bg": "#D9E8F5",
+      "surface": "#C9DCEC",
+      "ink": "#0A2036",
+      "muted": "#34506A",
+      "accent": "#0A2036",
+      "accent_ink": "#D9E8F5"
+    },
+    "graphite-chalk": {
+      "name": "Graphite and chalk, monochrome",
+      "mode": "dark",
+      "bg": "#1C1E1D",
+      "surface": "#272A29",
+      "ink": "#ECEEEA",
+      "muted": "#B0B5B0",
+      "accent": "#ECEEEA",
+      "accent_ink": "#1C1E1D"
+    }
+  },
+  "directions": {
+    "monument": {
+      "name": "Le nom en monument / The name as monument",
+      "idea": "The person's name is the page's architecture: set as large as the screen allows, it is the first and last thing seen; everything else is docked around it.",
+      "needs": {},
+      "suits": [
+        "designer",
+        "architect",
+        "photographer",
+        "communication",
+        "marketing",
+        "student",
+        "chef",
+        "craft",
+        "sport"
+      ],
+      "tags": [
+        "creative",
+        "short-name"
+      ],
+      "type": [
+        "schibsted-solo",
+        "archivo-solo",
+        "darker-rethink",
+        "redhat-solo",
+        "host-solo",
+        "mona-solo",
+        "gloock-hanken"
+      ],
+      "palette": [
+        "black-white-blue",
+        "stone-forest",
+        "steel-red",
+        "graphite-chalk",
+        "olive-bone",
+        "sky-ink"
+      ],
+      "hero": {
+        "desktop": "The full name fills the width, fitted by measurement (a small script sets its size from the container, or SVG text with textLength), starting on the left margin, in the display face, one or two lines (first name over last name when long). Above it, in the corners at text size: on the left the job in plain words, on the right the city and what they look for. Under the name: one sentence (lead size) saying what they do concretely, and the primary action. No picture needed; if there is a photo it sits beside the sentence at about a third of the width, never over the name.",
+        "phone": "First name and last name stacked, each fitted to the width (26–30vw). The job line above, the sentence and the action below, all in the first screen."
+      },
+      "sections": {
+        "story": "Statement: two or three sentences in their voice at statement size (28–36px), left third empty only if the sentence's right edge closes it; otherwise span 8 of 12 columns.",
+        "experience": "Rows: each role is one row on a 12-column grid: dates (tabular) in columns 1–2, role and organisation as a heading in 3–7, the points in 8–12. Rows separated by space and a tone step on alternate rows, never a line.",
+        "projects": "Large still per project, full width or 8 columns, title set big in the display face over the image's edge, not on it.",
+        "skills": "Two to four groups set as short sentences or plain lists, side by side; group names are headings at head size.",
+        "education": "Compact rows like experience but half the size.",
+        "contact": "The email address set at display size as one link, fitted to the width, with a copy button beside it.",
+        "footer": "The name returns, smaller than the hero but still large, with the year range of the career and the links in plain text."
+      },
+      "signature": "On load, the name settles: letters rise 0.12em with opacity in one quick stagger (30 ms per letter, ease-out, 500 ms total). Once.",
+      "live": [
+        "copy the email address with a confirmation that replaces the button label for 2 s",
+        "a 'short version' toggle that collapses the page to the first screen, the last two roles and the contact"
+      ],
+      "fails": "The name is so big the first screen says nothing else: keep the job and the sentence in the first screen. Long names (over 20 characters) need two lines; fit each line separately."
+    },
+    "registre": {
+      "name": "Le registre / The index",
+      "idea": "The career is a well-kept register: dense, exact, scannable, the kind of document an engineer or an accountant trusts at a glance.",
+      "needs": {},
+      "suits": [
+        "developer",
+        "data",
+        "engineer",
+        "finance",
+        "accounting",
+        "legal",
+        "logistics",
+        "project-manager",
+        "researcher",
+        "business"
+      ],
+      "tags": [
+        "tech",
+        "industry"
+      ],
+      "type": [
+        "plex-condensed",
+        "mona-solo",
+        "host-solo",
+        "caslon-franklin",
+        "schibsted-solo",
+        "familjen-spectral"
+      ],
+      "palette": [
+        "paper-cobalt",
+        "steel-red",
+        "harbour",
+        "black-white-blue",
+        "night-ochre",
+        "graphite-chalk"
+      ],
+      "hero": {
+        "desktop": "Split 7/5. Left: the h1 is the name and job as one statement ('Inès Hadj, ingénieure backend') at display size, the supporting sentence under it, the action. Right: a definition list on the surface tone, filling the column's height: based in, looking for, years of experience (computed from the CV's dates, stated as 'since 2019'), languages, the three tools they used most. Real facts, tabular figures.",
+        "phone": "The statement first, then the definition list as a full-width block on the surface tone, then the action."
+      },
+      "sections": {
+        "story": "Two-column prose: heading in the left third, text in the right two-thirds, max 62ch.",
+        "experience": "Index table: a real <table> (lines allowed inside real tables, 1px in --surface tone only between rows) with columns period · role · organisation · place; each row expands on click to show its points (a <details> per row, open by default without JS for the two most recent).",
+        "projects": "Two-column list: project name as a heading left, what it did and the stack as a sentence right, link at the end.",
+        "skills": "A matrix as a real table: group in the first column, items as a comma-separated sentence, years or context in the last column if the CV gives it.",
+        "education": "Same index table, smaller.",
+        "contact": "One line: the email as a large link, other links as plain text on the same baseline at the far right.",
+        "footer": "One quiet line: name, city, the link to download the CV PDF."
+      },
+      "signature": "The index rows enter in a single stagger (40 ms apart, 12px rise) when the table enters the screen. Rows that open animate height with opacity, 200 ms ease-out.",
+      "live": [
+        "filter the index by skill: clicking a tool highlights the roles where it was used",
+        "copy the email with confirmation"
+      ],
+      "fails": "Dense becomes grey: keep the headline huge and the table's text in full ink. A table with lines everywhere reads as a spreadsheet; lines only between rows, in a tone step."
+    },
+    "chapitres": {
+      "name": "Les chapitres en couleur / Colour chapters",
+      "idea": "Each part of the person's story is a chapter with its own field of colour; the page reads like turning pages.",
+      "needs": {},
+      "suits": [
+        "sales",
+        "marketing",
+        "communication",
+        "student",
+        "hr",
+        "teacher",
+        "hospitality",
+        "retail",
+        "sport",
+        "business"
+      ],
+      "tags": [
+        "alternance",
+        "reconversion",
+        "student"
+      ],
+      "type": [
+        "funnel",
+        "besley-work",
+        "redhat-solo",
+        "darker-rethink",
+        "youngserif-albert",
+        "archivo-solo"
+      ],
+      "palette": [
+        "tomato-fields",
+        "mustard-fields",
+        "blush-plum",
+        "oxblood"
+      ],
+      "hero": {
+        "desktop": "The first field (field_1) fills the first screen. A two-line headline at 8–11vw says who and what, anchored on the left margin in the lower half; the supporting sentence and the action sit to its right on the same baseline (opposite ends). The navigation is three words at the top in the field's ink.",
+        "phone": "Same field. Headline at 15–17vw on two or three words per line, sentence and action below it."
+      },
+      "sections": {
+        "story": "Ground colour (bg). A statement at 32–36px spanning 9 columns, starting at column 3.",
+        "experience": "Field_2 (or ink as ground). One role per band: the role and organisation as a heading at head size on the left half, dates and points on the right half; bands separated by generous space, not lines.",
+        "projects": "Ground colour. Pictures or drawn stills alternate left and right, each with its caption on the far side.",
+        "skills": "Field_1 again, small: skills as a few large words per group, set at lead size, wrapped naturally.",
+        "education": "Ground colour, compact rows.",
+        "contact": "Field_2: the closing line ('Écrivez-moi', 'Let's talk' only if the person's voice allows) at display size and the email as the action.",
+        "footer": "Inside the contact field, one line at small size."
+      },
+      "signature": "When each field enters, its heading rises 24px with opacity; the page's theme-color meta follows the current field.",
+      "live": [
+        "a 'what I'm looking for' card on the first screen that cycles between the two or three real criteria from the CV when tapped",
+        "copy the email with confirmation"
+      ],
+      "fails": "Fields that differ only in hue vibrate: neighbours must differ in lightness. More than three field colours becomes a toy."
+    },
+    "artefact": {
+      "name": "La pièce du métier / The trade's artefact",
+      "idea": "The page takes the form of a printed thing from the person's trade, so the design itself says what they do before a word is read.",
+      "needs": {},
+      "suits": [
+        "nurse",
+        "health",
+        "doctor",
+        "chef",
+        "hospitality",
+        "logistics",
+        "teacher",
+        "trades",
+        "craft",
+        "sport",
+        "legal",
+        "accounting",
+        "social",
+        "retail",
+        "engineer",
+        "developer"
+      ],
+      "tags": [],
+      "type": [
+        "literata-atkinson",
+        "bitter-gantari",
+        "zilla-karla",
+        "plex-condensed",
+        "caslon-franklin",
+        "familjen-spectral",
+        "youngserif-albert"
+      ],
+      "palette": [
+        "harbour",
+        "sky-ink",
+        "stone-forest",
+        "paper-cobalt",
+        "olive-bone",
+        "steel-red",
+        "sage-field"
+      ],
+      "hero": {
+        "desktop": "Choose the artefact from the inventory (a handover sheet, a kitchen ticket, a delivery note, a class register, a match sheet, a work order, a release note, a lab protocol, a court docket). Draw its header as the hero: the person's name in the place the artefact puts its main entry, the job and city in its fields, the date as today's real date if the artefact has one. Build it from flat shapes and type in the palette, at large size, filling at least two thirds of the first screen. It must read as the artefact at a glance and as a CV header on reading. The supporting sentence and the action sit outside the artefact, beside it.",
+        "phone": "The artefact header full width, its fields stacked; the sentence and action under it in the first screen."
+      },
+      "sections": {
+        "story": "Written as the artefact's free-text field (the 'observations' box, the chef's note), at statement size.",
+        "experience": "The artefact's main grid carries the roles: each role is an entry the artefact would have (a line of the register, a ticket on the rail, a shift on the roster), with its dates in the artefact's date field and its points in the description field.",
+        "projects": "Attached sheets: each project as a smaller sheet of the same artefact.",
+        "skills": "The artefact's checklist or legend: skills listed as the items it would list, grouped as it would group them. Not checkboxes ticked like a form; the list itself.",
+        "education": "The artefact's 'qualifications' or 'authorisations' block.",
+        "contact": "The artefact's signature or sender block: name, email as the action.",
+        "footer": "The artefact's footer line (reference number = the year range, page 1/1)."
+      },
+      "signature": "The artefact is 'filled in' on load: its fields' values appear one after another (60 ms apart), as if written. Once.",
+      "live": [
+        "the artefact's date field shows today's date",
+        "a print button that prints the page as the artefact itself (print stylesheet)"
+      ],
+      "fails": "Costume: an artefact so literal it becomes a joke or unreadable. It is the structure, not a gag; the text stays at real reading sizes. Never imitate an official form of a real institution (logos, real reference numbers)."
+    },
+    "portrait": {
+      "name": "Le portrait / The portrait",
+      "idea": "The person, seen: a photograph used large and with intent carries the first screen and gives the page its colours.",
+      "needs": {
+        "photo": true
+      },
+      "suits": [
+        "sales",
+        "consultant",
+        "teacher",
+        "hr",
+        "health",
+        "nurse",
+        "hospitality",
+        "communication",
+        "manager",
+        "business",
+        "sport"
+      ],
+      "tags": [
+        "freelance"
+      ],
+      "type": [
+        "gloock-hanken",
+        "newsreader-solo",
+        "youngserif-albert",
+        "bodoni-chivo",
+        "familjen-spectral",
+        "hedvig"
+      ],
+      "palette": [
+        "stone-forest",
+        "oxblood",
+        "olive-bone",
+        "harbour",
+        "petrol-dark",
+        "night-ochre"
+      ],
+      "hero": {
+        "desktop": "Split 5/7 or 6/6: the photograph on one side, full height of the first screen, square corners, cropped so the face sits on the upper third line; the h1 (name, then job on the second line) and the sentence and action on the other side, anchored low. Take the ground colour from the photograph's background tone if it fits the dealt palette's proportions.",
+        "phone": "The photograph first at 4:5, then the name and job, sentence, action. The first screen may end at the job line."
+      },
+      "sections": {
+        "story": "Statement at 30–36px, one column of 9, beside a second, tighter crop of the same photograph only if it is good enough; otherwise no picture.",
+        "experience": "Two-column list: dates and organisation in a narrow left column, role as heading and points on the right.",
+        "projects": "Split rows alternating picture side.",
+        "skills": "Grouped lists in three columns.",
+        "education": "Compact rows.",
+        "contact": "Inverted section (ink as ground): the email as a large link.",
+        "footer": "One line."
+      },
+      "signature": "The photograph reveals with a clip-path inset from the bottom (600 ms, ease-out) on load, once; text follows 80 ms after.",
+      "live": [
+        "copy the email with confirmation",
+        "download the CV PDF"
+      ],
+      "fails": "A poor photograph (low resolution, busy background, selfie) used large is worse than none: if it cannot hold half a screen, choose another direction."
+    },
+    "lettre": {
+      "name": "La lettre / The letter",
+      "idea": "The page reads like a well-set letter in the person's voice: the story first, the facts in the margin.",
+      "needs": {},
+      "suits": [
+        "consultant",
+        "manager",
+        "researcher",
+        "teacher",
+        "legal",
+        "hr",
+        "social",
+        "writer",
+        "other",
+        "business"
+      ],
+      "tags": [
+        "reconversion",
+        "international"
+      ],
+      "type": [
+        "newsreader-solo",
+        "familjen-spectral",
+        "caslon-franklin",
+        "literata-atkinson",
+        "hedvig"
+      ],
+      "palette": [
+        "paper-cobalt",
+        "stone-forest",
+        "oxblood",
+        "blush-plum",
+        "olive-bone",
+        "sage-field"
+      ],
+      "hero": {
+        "desktop": "A 12-column page with the text column at columns 4–10 and a margin column at 11–12. The h1 is a sentence-shaped title of the person (name and what they do) at display size spanning columns 1–10. Under it the opening paragraph of the letter at statement size. In the margin column, at text size, aligned with the paragraph's first line: city, availability, email.",
+        "phone": "Single column; the margin facts move under the opening paragraph as a short definition list."
+      },
+      "sections": {
+        "story": "The letter continues: two or three paragraphs in the text column, first person, from the CV's facts.",
+        "experience": "Each role as a short paragraph with a run-in heading (role and organisation in the strong weight, then the text), dates in the margin column level with it.",
+        "projects": "Same as experience, with the link in the margin.",
+        "skills": "A paragraph that names the skills in context, plus a compact list in the margin.",
+        "education": "Margin column only, beside the last experience paragraphs.",
+        "contact": "The letter's close: a sign-off line and the email as the action, set larger.",
+        "footer": "Nothing more than the sign-off; the page ends there."
+      },
+      "signature": "None on scroll; on load, the opening paragraph fades in 120 ms after the title. Restraint is the move.",
+      "live": [
+        "a language switch when the CV exists in two languages (both versions written from the person's text, never machine-mixed)",
+        "copy the email with confirmation"
+      ],
+      "fails": "Too long: a letter of 2,000 words is a wall. Keep the whole page under about 700 words. The margin column empty is a hole: put facts in it all the way down."
+    },
+    "chiffres": {
+      "name": "Les preuves chiffrées / The figures",
+      "idea": "The person's real results, one at a time, each large enough to be the screen's subject, each with the sentence that makes it true.",
+      "needs": {
+        "figures": 3
+      },
+      "suits": [
+        "sales",
+        "business",
+        "marketing",
+        "finance",
+        "manager",
+        "project-manager",
+        "logistics",
+        "sport",
+        "retail"
+      ],
+      "tags": [],
+      "type": [
+        "archivo-solo",
+        "shoulders-public",
+        "mona-solo",
+        "besley-work",
+        "schibsted-solo",
+        "redhat-solo"
+      ],
+      "palette": [
+        "steel-red",
+        "black-white-blue",
+        "night-ochre",
+        "mustard-fields",
+        "graphite-chalk",
+        "tomato-fields"
+      ],
+      "hero": {
+        "desktop": "The h1 is the name and job at head size top-left; the dominant thing is the person's single strongest figure at 18–26vw in the display face, starting on the left margin, with its sentence of context at lead size to its right, bottom-aligned with the figure. The action under the sentence.",
+        "phone": "Name and job, then the figure at 32–38vw, then its sentence and the action."
+      },
+      "sections": {
+        "story": "Statement, 2 sentences.",
+        "experience": "Each role opens with its figure if the CV gives one (display face, head size or larger), then role, organisation, dates and points in a two-column split. Roles without figures are plain rows. Never a row of three stat cards.",
+        "projects": "Rows.",
+        "skills": "Grouped lists.",
+        "education": "Compact rows.",
+        "contact": "The last figure is the email: set at display size as the action.",
+        "footer": "One line."
+      },
+      "signature": "Each figure counts up from 0 once when it enters (900 ms, ease-out, tabular figures so the width does not jump). Reduced motion: shown at its value.",
+      "live": [
+        "the hero figure can be stepped through the person's other real figures with two arrow buttons",
+        "copy the email with confirmation"
+      ],
+      "fails": "Figures without context are vanity: every figure carries its sentence and its year. Only numbers from the CV. If fewer than three exist, this direction is not dealt."
+    },
+    "itineraire": {
+      "name": "L'itinéraire / The route",
+      "idea": "The career drawn as a route between the real places the person has studied and worked, read like a line map.",
+      "needs": {
+        "places": 3
+      },
+      "suits": [
+        "logistics",
+        "sales",
+        "student",
+        "engineer",
+        "hospitality",
+        "consultant",
+        "researcher",
+        "sport",
+        "other"
+      ],
+      "tags": [
+        "international",
+        "alternance",
+        "reconversion"
+      ],
+      "type": [
+        "plex-condensed",
+        "bitter-gantari",
+        "funnel",
+        "host-solo",
+        "familjen-spectral",
+        "shoulders-public"
+      ],
+      "palette": [
+        "harbour",
+        "sky-ink",
+        "night-ochre",
+        "petrol-dark",
+        "paper-cobalt",
+        "olive-bone"
+      ],
+      "hero": {
+        "desktop": "Top half: the h1 (name and job) and the sentence, left-aligned, action at the right on the same baseline as the sentence. Bottom half: the route as a drawn line map across the full width: a thick line (4–8px, the ink or accent) with a filled stop per place in career order, each stop labelled with the city and the year at text size. Places come from the profile, in order. It is a diagram, not a geographic map; no tiles, no pins.",
+        "phone": "The route turns vertical along the left margin, stops at 56–72px intervals, labels to the right."
+      },
+      "sections": {
+        "story": "Statement.",
+        "experience": "Each role sits under its stop: the route continues down the page as the left spine of the experience section, thick line, filled stops; the role's heading, dates and points to the right of each stop.",
+        "projects": "Rows.",
+        "skills": "Grouped lists in columns.",
+        "education": "Stops on the same route, drawn as hollow-filled stops (a different fill, not an outline) to tell them apart from jobs, with a key in words.",
+        "contact": "The route's last stop is 'next': what they look for and where, and the email as the action.",
+        "footer": "One line."
+      },
+      "signature": "The route draws itself across the hero once on load (stroke-dashoffset, 900 ms, ease-in-out), stops appearing as the line reaches them.",
+      "live": [
+        "hovering or tapping a stop on the hero highlights the matching role below and scrolls to it",
+        "copy the email with confirmation"
+      ],
+      "fails": "A thin line with small dots is the generic timeline: the line is thick and the stops are big filled shapes with real labels. Fewer than three places: not dealt."
+    },
+    "atelier": {
+      "name": "L'atelier / The workshop",
+      "idea": "The work first: the person's projects shown large, the CV underneath as the caption to the work.",
+      "needs": {
+        "projects": 2
+      },
+      "suits": [
+        "designer",
+        "developer",
+        "architect",
+        "photographer",
+        "craft",
+        "chef",
+        "communication",
+        "marketing",
+        "engineer"
+      ],
+      "tags": [
+        "freelance",
+        "creative"
+      ],
+      "type": [
+        "gloock-hanken",
+        "hedvig",
+        "schibsted-solo",
+        "darker-rethink",
+        "bodoni-chivo",
+        "host-solo"
+      ],
+      "palette": [
+        "black-white-blue",
+        "stone-forest",
+        "graphite-chalk",
+        "olive-bone",
+        "paper-cobalt",
+        "night-ochre"
+      ],
+      "hero": {
+        "desktop": "The name and job as the h1 at head size top-left with the sentence; the rest of the first screen is the strongest project: its image (the person's own screenshot or photo) at 7+ columns, square corners, with its title and year beside it. If the CV has no image for a project, draw a plate that states what the commission produced (the counts and deliverables written in the CV: '9 emballages', '40 panneaux') in the page's own type, like a printer's job sheet. Never draw an imitation of the work itself (no fake logo, no fake poster), and tell the person to replace plates with their own photographs.",
+        "phone": "Name and job, then the project still at 4:5, then the sentence and action."
+      },
+      "sections": {
+        "story": "Short statement beside a second project.",
+        "experience": "Rows below the work, compact: the CV supports the work.",
+        "projects": "The archive: one project per screen-height on desktop, alternating a full-bleed still with a 7/5 split; each has title, year, role, what it did, link.",
+        "skills": "Plain grouped lists.",
+        "education": "Compact rows.",
+        "contact": "The email large, plus 'see more' links.",
+        "footer": "One line."
+      },
+      "signature": "Project stills open from a clip-path inset as they enter (500 ms ease-out), once each.",
+      "live": [
+        "filter projects by type (when there are 5 or more)",
+        "a before/after slider when the CV describes a redesign and both images exist"
+      ],
+      "fails": "Invented work: never draw a project the CV does not describe, and never imitate what the work looks like. A typeface or logo the person designed is never 'shown' in another face. Grey boxes instead of stills: draw the plate properly or leave the project as text."
+    },
+    "affiche": {
+      "name": "L'affiche / The poster",
+      "idea": "Each screen is a typographic poster: huge condensed type, two sizes only, one flat field per poster.",
+      "needs": {},
+      "suits": [
+        "student",
+        "sport",
+        "communication",
+        "marketing",
+        "hospitality",
+        "retail",
+        "designer",
+        "chef",
+        "other"
+      ],
+      "tags": [
+        "alternance",
+        "student",
+        "creative"
+      ],
+      "type": [
+        "shoulders-public",
+        "darker-rethink",
+        "archivo-solo",
+        "funnel",
+        "redhat-solo"
+      ],
+      "palette": [
+        "tomato-fields",
+        "mustard-fields",
+        "black-white-blue",
+        "steel-red",
+        "sky-ink"
+      ],
+      "hero": {
+        "desktop": "A poster: the job or the name set in condensed display type at 14–20vw over two lines, filling the width; the other one (name or job) at lead size above it; the sentence and the action at the bottom-right corner on the same baseline as the poster's last line. One field colour, one ink.",
+        "phone": "The display lines at 22–26vw, stacked; sentence and action under them."
+      },
+      "sections": {
+        "story": "Poster: one sentence at statement size centred on one axis with wide flanks (the page's one centred moment).",
+        "experience": "Poster per role: the role in condensed display at head size, organisation and dates at text size beside it, points in two columns underneath. Alternate the ground and one field.",
+        "projects": "Poster per project with its still.",
+        "skills": "The skills as a wall of words at two sizes (main skills at head size, others at lead size), wrapping naturally, in one field.",
+        "education": "Compact rows on the ground colour.",
+        "contact": "Final poster: the email in condensed display fitted to the width.",
+        "footer": "One line inside the last poster."
+      },
+      "signature": "Display lines slide in from 8% to the side with opacity, 450 ms ease-out, as each poster enters.",
+      "live": [
+        "copy the email with confirmation",
+        "the skills wall: tapping a skill shows, in a line under the wall, where it was used (from the CV)"
+      ],
+      "fails": "All caps everywhere is shouting: capitals only for the condensed display lines. Two sizes means two sizes; a third creeping in breaks the poster."
+    }
+  },
+  "roles": [
+    "hero",
+    "story",
+    "experience",
+    "projects",
+    "skills",
+    "education",
+    "contact",
+    "footer"
+  ]
+}

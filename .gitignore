@@ -1,0 +1,21 @@
+# OS / editor cruft
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+**/__pycache__/
+*.pyc
+.venv/
+
+# Node / Astro (the site template, and any site generated while testing)
+node_modules/
+**/node_modules/
+dist/
+.astro/
+
+# Runs of the skill: never commit a real CV or a generated site
+work/
+site/
+*.pdf
+*.docx

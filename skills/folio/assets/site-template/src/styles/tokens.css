@@ -1,0 +1,8 @@
+/* The direction's tokens. Replace every value from work/sheet.md; everything else references these.
+   base.css holds neutral defaults; this file wins because it is loaded after it, outside any layer. */
+:root {
+  --bg: #f3f3f1; --surface: #e7e7e4; --ink: #111; --muted: #4a4a48; --accent: #0047ff; --accent-ink: #fff;
+  --font-display: system-ui, sans-serif;
+  --font-text: system-ui, sans-serif;
+  --display-weight: 800; --display-tracking: -0.04em; --display-leading: 0.92;
+}

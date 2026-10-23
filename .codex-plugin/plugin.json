@@ -1,0 +1,28 @@
+{
+  "name": "folio",
+  "version": "0.2.0",
+  "description": "Turn a CV into a personal website that looks designed for that one person, not generated.",
+  "author": {
+    "name": "Lucas Moreau",
+    "url": "https://github.com/lulu38m"
+  },
+  "homepage": "https://FOLIO_DOMAIN",
+  "repository": "https://github.com/lulu38m/folio",
+  "license": "MIT",
+  "keywords": ["cv", "resume", "portfolio", "personal-website", "astro", "skill"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "folio",
+    "shortDescription": "Turn your CV into a personal website.",
+    "longDescription": "Turn a CV (PDF, DOCX, LinkedIn export or text) into a static personal website with its own art direction, self-hosted fonts, the SEO a personal page needs, and a LinkedIn announcement image and post. Nothing is invented: every fact comes from the CV.",
+    "developerName": "Lucas Moreau",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write", "Execute"],
+    "websiteURL": "https://FOLIO_DOMAIN",
+    "defaultPrompt": [
+      "Turn my CV into a website.",
+      "Make a personal site from this résumé.",
+      "Make my personal site look less generated."
+    ]
+  }
+}

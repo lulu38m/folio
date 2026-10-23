@@ -1,0 +1,30 @@
+---
+// One layout for the page and the announcement. The head comes from seo_head.py (src/seo-head.html).
+import "../styles/global.css";
+import seoHead from "../seo-head.html?raw";
+
+interface Props {
+  lang?: string;
+  /** Font files the first screen uses, e.g. ["/fonts/spectral-latin-600-normal.woff2"] */
+  preload?: string[];
+  /** The announcement page is not part of the site: no SEO head, not indexed. */
+  announce?: boolean;
+  title?: string;
+}
+const { lang = "fr", preload = [], announce = false, title } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add("js");</script>
+    {preload.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+    <link rel="stylesheet" href="/fonts/fonts.css" />
+    {announce ? (<><title>{title ?? "announce"}</title><meta name="robots" content="noindex, nofollow" /></>) : <Fragment set:html={seoHead} />}
+  </head>
+  <body>
+    <slot />
+    {!announce && <script src="../scripts/base.js"></script>}
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "folio",
+  "version": "0.2.0",
+  "description": "Turn a CV into a personal website that looks designed for that one person, not generated.",
+  "author": {
+    "name": "Lucas Moreau",
+    "url": "https://github.com/lulu38m"
+  },
+  "homepage": "https://FOLIO_DOMAIN",
+  "repository": "https://github.com/lulu38m/folio",
+  "license": "MIT",
+  "keywords": ["cv", "resume", "portfolio", "personal-website", "astro", "skill"]
+}

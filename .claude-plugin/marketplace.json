@@ -1,0 +1,15 @@
+{
+  "name": "folio",
+  "description": "Your CV, made into a site that is yours. Static Astro site, self-hosted fonts, SEO on your name, LinkedIn announcement kit.",
+  "owner": {
+    "name": "Lucas Moreau",
+    "url": "https://github.com/lulu38m"
+  },
+  "plugins": [
+    {
+      "name": "folio",
+      "source": "./",
+      "description": "Turn a CV into a personal website that looks designed for that one person, not generated."
+    }
+  ]
+}

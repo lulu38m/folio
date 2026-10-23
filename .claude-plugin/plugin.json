@@ -1,0 +1,12 @@
+{
+  "name": "folio",
+  "description": "Turn a CV into a personal website that looks designed for that one person, not generated.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Lucas Moreau"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/lulu38m/folio",
+  "repository": "https://github.com/lulu38m/folio",
+  "keywords": ["cv", "resume", "portfolio", "personal-website", "astro", "skill"]
+}
