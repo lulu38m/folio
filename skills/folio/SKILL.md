@@ -50,6 +50,12 @@ This writes `work/cv.txt` (the text, in reading order), `work/links.json` (every
 `references/content-model.md`. A DOCX or pasted text: save it as `work/cv.txt` and fill the profile the
 same way.
 
+**A CV made as a picture** (a Canva export, a scan, a phone photo) has no text. The script says
+`SCANNED PDF` and marks the page image `WHOLE PAGE`. With `tesseract` installed it OCRs it: correct every
+name, date and email against the image. Without it, open the page image and type the CV into
+`work/cv.txt` exactly as written. A photo inside the scan is not a separate file: crop it from the page if
+the person wants it shown.
+
 Rules for the profile:
 
 - **Copy, do not improve.** Employers, titles, dates, schools, numbers and skills are taken as written.
@@ -57,6 +63,21 @@ Rules for the profile:
 - **Mark what you inferred** (the sector, the person's level) in `notes`, never in the facts.
 - If something essential is missing (no job title, no contact), ask the person once, in one message,
   with all the questions together. If no one can answer, build without it and say so in the report.
+
+**Ask for more material when the CV is thin.** A CV is one page written for a recruiter; a site has room
+for more, and a page built from a thin CV looks empty however well it is set. The CV is thin when it has
+fewer than two projects, no figure, and no picture of the person or their work. Then, in the same single
+message as the other questions, ask for what only they have:
+
+- the things they made: projects, sites, apps, repositories (a GitHub or GitLab link), designs, reports,
+  dishes, buildings, events, with a link or a screenshot for each;
+- pictures: a photo of them they like, photos of their work, their workplace, their instrument or tools;
+- numbers they can stand behind (users, budget, team size, results, years of practice, concerts played);
+- in two or three sentences: what they want next, and what they are proudest of.
+
+Everything they send is a fact like the CV, recorded in the profile with its source (`"source": "person"`).
+Never fill the gap yourself. If they do not answer, build with the CV alone and say in the report which
+answers would have filled which section.
 
 ### 2. Privacy pass
 
@@ -106,8 +127,9 @@ it and write one line in the notes on why. Then print the full sheet:
 python3 <skill>/scripts/deal.py --profile work/profile.json --direction <id> > work/sheet.md
 ```
 
-The sheet fixes the type system, the palette, the hero, the section shapes, the phone composition and
-the signature move. **Adopt it.** Do not blend it with the layout you would have made anyway.
+The sheet fixes the type system, the palette, the hero, the section shapes, the phone composition, the
+motif (a drawing from the person's world that comes back through the page), the signature move and the
+scroll move. **Adopt it.** Do not blend it with the layout you would have made anyway.
 `--redraw type` or `--redraw palette` only for a reason you can state (the palette fights the subject's
 own colours; the type has no glyph the name needs) and record it. `--list` shows everything.
 `references/directions.md` explains each direction.
@@ -139,7 +161,7 @@ node <skill>/scripts/new_site.mjs site
 ```
 
 It copies `<skill>/assets/site-template` (Astro, React, Tailwind, Motion, ready for Cult UI) to `site/`
-and installs it. Then fetch the faces the sheet names; the site hosts its own fonts (faster, no third
+and installs it. It refuses Node older than 22.23: `node -v`, then `nvm install 24` (or nodejs.org). Then fetch the faces the sheet names; the site hosts its own fonts (faster, no third
 party, and no transfer of visitors' IP addresses to Google, which European courts have held against
 sites using Google Fonts):
 
@@ -157,7 +179,7 @@ The template, and where everything goes:
 | File | What you do there |
 | --- | --- |
 | `src/styles/tokens.css` | The sheet's colours and faces as custom properties. Everything references them. |
-| `src/styles/base.css` | Neutral reset, the five type steps, focus, reduced motion, `data-reveal`. Leave it. |
+| `src/styles/base.css` | Neutral reset, the five type steps, `.cols` (the 12-column grid), focus, reduced motion, `data-reveal`, the scroll helpers. Leave it. |
 | `src/styles/global.css` | Tailwind, plus the tokens as utilities (`bg-bg`, `text-ink`, `bg-accent`, `font-display`, `text-display`). Page-specific CSS goes at the end. |
 | `src/layouts/Base.astro` | `<html lang>`, the SEO head from step 9, the font preloads, `base.js`. Pass `lang` and `preload`. |
 | `src/pages/index.astro` | The page: static Astro markup, one section per claim. |
@@ -177,19 +199,27 @@ Order of work:
    included. Data that repeats (roles, schools, projects) lives in one object at the top of the page and
    is mapped, so nothing is typed twice.
 4. **Pictures,** in this order: the person's own (photo, project screenshots, work they made);
-   things drawn in code from their world (a route, a plan, a sheet, a ticket, set in the palette, one
-   consistent flat language, as inline SVG); type and colour alone. Never stock photographs of people,
-   never generated faces, never a placeholder box. A missing picture is better than a fake one.
-5. **The live thing,** one, from the sheet's list, made with the person's real content. This is where a
+   things drawn in code from their world (a route, a plan, a sheet, a ticket, a musical staff, set in the
+   palette, one consistent flat language, as inline SVG); type and colour alone. Never stock photographs
+   of people, never generated faces, never a placeholder box. A missing picture is better than a fake one.
+   **Draw the sheet's motif** as one Astro component and bring it back in at least three sections (the
+   hero, one in the middle, the close), changing its scale or crop each time.
+5. **Fill the page.** Every section carries at least two of: a picture or the motif, one element at
+   display scale (a name, a year, a figure, a word from the CV set huge), a full-width field of colour,
+   something that moves or opens. At least two sections are fields (the ink as ground, a surface step, a
+   palette field), edge to edge. No two neighbouring sections share a layout: name each one (cover,
+   centred programme, split, poster, index, field…) before building it. The check measures all three.
+6. **The live thing,** one, from the sheet's list, made with the person's real content. This is where a
    React island earns its place: a figure that counts (`CountUp`), a route that draws (`DrawPath`), rows
    that open, tabs. A component library (Cult UI) only through `references/components.md`.
-6. **States and semantics:** one `h1`, a heading on every section, real links, `mailto:` with a
+7. **States and semantics:** one `h1`, a heading on every section, real links, `mailto:` with a
    subject, visible focus, `alt` and `width`/`height` on every image, headings in order
    (`h1` → `h2` → `h3`), the name as real text with `translate="no"`. All of it in the HTML Astro writes,
    none of it only inside a client island. The head comes from step 9.
 
 Read `references/rules.md` before building: it is the full list of house rules and generated-portfolio
-tells, and §7 covers the stack. The short form is the table below. Build with `npm run build` in `site/`;
+tells, and §7 covers the stack. Lay out sections with `.cols` (12 columns, 4 on the phone) and
+`col-span-*`; Tailwind's `grid` is a plain `display: grid` for anything else. The short form is the table below. Build with `npm run build` in `site/`;
 it writes `site/dist/`.
 
 ### 9. SEO
@@ -207,7 +237,9 @@ It writes `site/src/seo-head.html`, which the layout puts in `<head>` (title "Pr
 Ville", meta description, canonical, Open Graph `profile` with the absolute URL of `announce.png`, Twitter
 card, theme-color, favicon, and a schema.org `Person` in JSON-LD holding only the public facts), and
 `site/public/robots.txt`, `sitemap.xml` (skipped with `--noindex`) and `favicon.svg`. Unknown address:
-pass `https://SITE_URL` and replace it at publication. Then pass the one or two font files the first
+pass `https://SITE_URL` and replace it at publication. Pass `--description` with one sentence from
+`work/copy.md` (70–160 characters, the name, the job, the city, what they look for): the default built
+from `looking_for` is a fallback, not copy. Then pass the one or two font files the first
 screen uses to the layout: `<Base lang="fr" preload={["/fonts/<file>.woff2"]}>`. `references/seo.md` has
 the rules and what never to do (keyword lists, hidden text, fake ratings, private fields in the JSON-LD).
 
@@ -227,6 +259,8 @@ first-screen and a full-page screenshot per width, and measures: one `h1`, headl
 fonts that failed to load, horizontal overflow, text under 13px, contrast, gradients, shadows, blur,
 monospace, tracked capitals, emoji, skill bars and stars, thin outlined boxes, banned palettes, overused
 faces, banned phrases, French spacing before `; : ! ?`, sections without headings, half-empty sections,
+text on top of text, words broken in the middle, neighbouring sections with the same layout, empty
+stretches over half a screen, a page with fewer than two drawings or two fields, no scroll move,
 the SEO head (title, description, canonical, absolute `og:image`, JSON-LD `Person` with no private
 field, heading order, image dimensions, font preload, theme-color, zoom not locked), the page with
 JavaScript off (the text must be in the HTML), and the weight of the JavaScript.
@@ -242,13 +276,27 @@ again, look again. Three rounds at most. Judge only the pictures.
 
 ### 12. Move
 
-Last, and little. One signature move from the sheet, an entrance for each section's parts (staggered
-40–80 ms, rising 12–24 px, once), press feedback on buttons, hover gated behind
-`(hover: hover) and (pointer: fine)`. Entrances with CSS (`data-reveal`); the signature move and anything
-CSS does badly with a Motion island that follows `useOnView`. Transform, opacity and clip-path only,
-ease-out curves, under 300 ms for interface feedback, and a `prefers-reduced-motion` fallback that keeps
-everything visible. `references/motion.md` has the values and the island rules. Rebuild and check again
-afterwards: a reveal that did not fire is a blank band in the screenshot.
+Motion is part of the design, not a garnish: a visitor should feel the page answer the scroll. Three
+layers, all from the sheet and `references/motion.md`:
+
+1. **On load, the signature move** from the sheet, once (the name settling, the artefact filled in, the
+   route drawing). With the first screen's parts entering in one stagger (`data-stagger`, 40–80 ms).
+2. **With the scroll, the sheet's scroll move.** Mark the block `data-scroll`; `base.js` gives it `--p`
+   (0 → 1 while it crosses the screen) and `--pe` (0 → 1 as it enters). Tie the motif to them with the
+   helpers in `base.css`: `.scroll-draw` (an SVG drawn as you scroll), `.scroll-grow` (a bar that fills),
+   `.scroll-x` / `.scroll-x-rev` (display type sliding against the scroll), `.scroll-y`, `.scroll-turn`,
+   and `.pin` (a heading that stays while its chapter scrolls under it). At least the motif and one
+   display line move with the scroll.
+3. **Entrances and feedback.** Headings that rise line by line out of a mask (`data-reveal="lines"`),
+   blocks that rise 12–24 px once (`data-reveal`), press feedback on buttons, link underlines that grow,
+   hover gated behind `(hover: hover) and (pointer: fine)`.
+
+Transform, opacity, clip-path and SVG strokes only; ease-out curves, under 300 ms for interface feedback.
+Scroll-linked rules always fall back to the finished state (`var(--pe, 1)`), so the page is complete
+without script and under `prefers-reduced-motion`, where nothing is set. Text never fades out with the
+scroll. Rebuild and check again afterwards: a reveal that did not fire is a blank band in the screenshot.
+Then record a few seconds of the page scrolling if you can (Playwright `recordVideo`) and watch it: the
+screenshots do not show motion.
 
 ### 13. The announcement kit
 
@@ -295,6 +343,8 @@ Measured by `check_site.mjs` unless marked *(look)*. Full list and reasons in `r
 | **No assistant palettes:** cream with terracotta, violet or indigo, near-black with a neon accent | The dealt palette |
 | **No overused faces** (Inter, Poppins, Montserrat, Space Grotesk, Playfair, Fraunces, Instrument Serif…) | The dealt type system, self-hosted |
 | **Two typefaces at most, five sizes at most**, body text 16px or more in full ink | Scale contrast does the work |
+| **No empty page:** the motif in three sections, two full-width fields, no two neighbouring sections alike, nothing blank over half a screen | The person's material (ask for more), the motif, one thing at display scale per section |
+| **The page answers the scroll:** one load move, one scroll move, entrances | `data-scroll` and the helpers in `base.css`; never at the cost of text without script |
 | **Equal outer margins; no section with half the width empty; a heading on every section** | Close every void with the section's content |
 | **No invented facts, proof, testimonials, logos or numbers** *(look)* | What the CV says, set well |
 | **No generated-voice copy** ("passionné", "dynamique", "n'hésitez pas", "unlock", "seamless", "Bienvenue sur mon portfolio") | Specific nouns and real numbers |
@@ -314,7 +364,7 @@ of flat colour.
 | `references/components.md` | Step 8, before using any component library (Cult UI): which ones, how to adapt them. |
 | `references/type-colour-layout.md` | Step 8: scale, setting, palettes, margins, grid, the phone. |
 | `references/seo.md` | Step 9: the head, the JSON-LD `Person`, on-page rules, what never to do. |
-| `references/motion.md` | Step 12: what moves, curves, durations, reduced motion, Motion islands. |
+| `references/motion.md` | Step 12: what moves, curves, durations, scroll-linked moves, reduced motion, Motion islands. |
 | `references/critique.md` | Step 11: how to look, the score, the caps. |
 | `scripts/extract_cv.py` | Step 1. |
 | `scripts/deal.py` | Step 5. `--list`, `--options 3`, `--direction <id>`, `--redraw type|palette`. |

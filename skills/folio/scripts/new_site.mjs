@@ -13,6 +13,7 @@ const template = join(dirname(fileURLToPath(import.meta.url)), "..", "assets", "
 const [major, minor] = process.versions.node.split(".").map(Number);
 if (major < 22 || (major === 22 && minor < 23)) {
   console.error(`Node ${process.versions.node}: Astro needs Node 22.23 or later (Node 24 LTS recommended).`);
+  console.error("Install it with nvm (nvm install 24 && nvm use 24), fnm (fnm use --install-if-missing 24), or from https://nodejs.org.");
   process.exit(1);
 }
 if (existsSync(dest) && readdirSync(dest).length) {

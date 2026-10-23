@@ -62,7 +62,7 @@ Add `-g` to install it globally; drop it to scope it to the current project.
 
 ```bash
 git clone https://github.com/lulu38m/folio
-rsync -a --exclude '.DS_Store' folio/skills/folio/ ~/.claude/skills/folio/
+mkdir -p ~/.claude/skills && cp -R folio/skills/folio ~/.claude/skills/
 ```
 
 Restart Claude Code after copying. In the Claude app, zip `skills/folio/` and upload it under Settings → Capabilities → Skills.
@@ -116,8 +116,9 @@ Skill bars, "Hi, I'm Alex 👋", typing effects, timelines with dots, circular a
 
 - An agent that supports Agent Skills: Claude Code, the Claude app, Codex CLI, opencode, or any agent with custom instructions
 - Python 3.9+ with `pypdf`
-- Node.js 22.23+ (Node 24 LTS recommended) and npm
+- Node.js 22.23+ (Node 24 LTS recommended) and npm. Check with `node -v`; if it is older, `nvm install 24` (or download it from nodejs.org)
 - Playwright with Chromium, for the check: `npm i -D playwright && npx playwright install chromium`
+- Optional: `tesseract` (with the French data), to read CVs exported as images (Canva, scans). Without it, the agent reads the page image itself
 
 Optional, for a second review pass: `npx skills add vercel-labs/agent-skills --skill web-design-guidelines`.
 

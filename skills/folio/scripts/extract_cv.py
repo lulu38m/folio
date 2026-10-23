@@ -4,7 +4,8 @@
 Usage: extract_cv.py cv.pdf --out work
 
 Writes:
-  work/cv.txt          text in reading order (pdftotext -layout when available, else pypdf)
+  work/cv.txt          text in reading order (pdftotext -layout when available, else pypdf; for a scanned
+                       PDF, tesseract OCR when it is installed, else empty: read the page images yourself)
   work/links.json      every URI and mailto found in link annotations, plus emails/URLs in the text
   work/images/         embedded images, with sizes printed (the photo is usually the largest portrait one)
   work/profile.json    empty skeleton to fill (see references/content-model.md); never overwritten
@@ -43,6 +44,33 @@ def text_of(pdf):
         except TypeError:
             parts.append(page.extract_text() or "")
     return "\n\f\n".join(parts), "pypdf"
+
+
+def page_scans(pdf, imgs):
+    """Images that cover a whole page: the PDF is a picture of a CV (a Canva or phone export), not text."""
+    r = PdfReader(pdf)
+    scans = []
+    for s in imgs:
+        box = r.pages[s["page"] - 1].mediabox
+        pw, ph = float(box.width), float(box.height)
+        if s["width"] and s["ratio"] and abs(s["ratio"] - ph / pw) < 0.08 and s["width"] >= 800:
+            scans.append(s)
+    return scans
+
+
+def ocr(paths):
+    if not shutil.which("tesseract"):
+        return ""
+    out = []
+    for p in paths:
+        try:
+            out.append(subprocess.run(["tesseract", p, "-", "-l", "fra+eng"], capture_output=True, text=True, check=True).stdout)
+        except subprocess.CalledProcessError:
+            try:
+                out.append(subprocess.run(["tesseract", p, "-"], capture_output=True, text=True, check=True).stdout)
+            except subprocess.CalledProcessError:
+                pass
+    return "\n\f\n".join(out)
 
 
 def links_of(pdf, text):
@@ -102,10 +130,15 @@ def main():
     os.makedirs(a.out, exist_ok=True)
 
     text, how = text_of(a.pdf)
+    imgs = images_of(a.pdf, os.path.join(a.out, "images"))
+    scans = page_scans(a.pdf, imgs) if len(text.strip()) < 200 else []
+    if scans:
+        t = ocr([s["path"] for s in scans])
+        if t.strip():
+            text, how = t, "tesseract OCR of the page images (check every name, date and email against the image)"
     open(os.path.join(a.out, "cv.txt"), "w", encoding="utf-8").write(text)
     links = links_of(a.pdf, text)
     json.dump(links, open(os.path.join(a.out, "links.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    imgs = images_of(a.pdf, os.path.join(a.out, "images"))
 
     prof = os.path.join(a.out, "profile.json")
     if not os.path.exists(prof):
@@ -119,11 +152,19 @@ def main():
     print(f"images: {len(imgs)} -> {a.out}/images/")
     for s in imgs[:8]:
         shape = "portrait" if s["ratio"] and s["ratio"] > 1.05 else ("square" if s["ratio"] and s["ratio"] > 0.9 else "landscape")
+        if s in scans:
+            shape = "WHOLE PAGE (a scan of the CV, not a photo)"
         print(f"   {s['path']}  {s['width']}x{s['height']}  {shape}  page {s['page']}")
-    if imgs:
+    if imgs and len(scans) < len(imgs):
         print("Look at the largest portrait or square image: if it is the person, set has_photo and photo in the profile.")
     print(f"profile skeleton: {prof} (fill it; see references/content-model.md)")
-    if len(text.strip()) < 200:
+    if scans and how.startswith("tesseract"):
+        print("SCANNED PDF: the text comes from OCR. Open the page image(s) above and correct cv.txt against them.")
+    elif scans:
+        print("SCANNED PDF: the CV is a picture, there is no text to extract (tesseract is not installed).")
+        print("Open the page image(s) above with your image viewer and type the CV into work/cv.txt yourself,")
+        print("exactly as written. A photo inside the scan must be cropped from it (and confirmed by the person).")
+    elif len(text.strip()) < 200:
         print("WARNING: very little text. The PDF may be scanned; OCR it or ask for a text version.")
 
 

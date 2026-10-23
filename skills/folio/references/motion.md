@@ -1,18 +1,22 @@
 # Motion
 
-Motion comes last and stays small. A personal site is read, not operated: a recruiter opens it once or
-twice. One orchestrated moment on load and short entrances as sections arrive land better than effects
-everywhere. Rules adapted from Emil Kowalski's skills (MIT).
+Motion is built last but it is part of the design: a page that does not answer the scroll feels like a
+PDF. A personal site is read, not operated, so the motion follows the reading: one orchestrated moment on
+load, the person's motif moving with the scroll, and short entrances as sections arrive. Never effects for
+their own sake. Rules adapted from Emil Kowalski's skills (MIT).
 
 ## What moves
 
 1. **The signature move** on the sheet, once, on load or when its section enters.
-2. **Entrances**: a section's heading, then its text, then its picture, staggered 40–80 ms apart,
-   rising 12–24px with opacity, once. Not one fade for a whole block, and not the same fade on every
-   block of the page.
-3. **Feedback**: buttons scale to 0.97 on press (100–160 ms); links thicken their underline on hover;
+2. **The scroll move** on the sheet: the motif and one or two display lines tied to the scroll
+   (below, §Scroll). This is what makes the page feel alive between the load and the contact.
+3. **Entrances**: a section's heading line by line (`data-reveal="lines"`), then its text, then its
+   picture, staggered 40–80 ms apart, rising 12–24px with opacity, once. Not one fade for a whole block,
+   and not the same fade on every block of the page.
+4. **Feedback**: buttons scale to 0.97 on press (100–160 ms); links thicken their underline on hover;
    the copy-email button changes its label to confirm.
-4. Nothing else. No parallax on text, no cursor followers, no marquee of skills, no infinite loops.
+5. Nothing else. No parallax on running text, no cursor followers, no marquee of skills, no infinite
+   loops, no scroll-jacking (the page always scrolls at the visitor's speed).
 
 ## Curves and durations
 
@@ -36,6 +40,44 @@ everywhere. Rules adapted from Emil Kowalski's skills (MIT).
   change is the one exception, and it is short).
 - `transition` with named properties, never `transition: all`.
 - Hover effects inside `@media (hover: hover) and (pointer: fine)`.
+
+## Scroll
+
+`src/scripts/base.js` gives every element marked `data-scroll` two custom properties, updated once per
+frame while it is near the screen:
+
+- `--p`: 0 when its top reaches the bottom of the screen, 1 when its bottom leaves the top. For movement
+  that lasts the whole crossing (a line sliding, a picture moving slower than the page).
+- `--pe`: 0 when it enters, 1 once its top is 35 % up the screen; it never goes back and completes at the
+  end of the page. For things that build once (a drawing, a bar, a stamp).
+
+Nothing is set without script or under reduced motion: every rule must fall back to the finished state,
+`var(--pe, 1)` and `var(--p, 0.5)`. The helpers in `src/styles/base.css`:
+
+| Class (inside a `data-scroll` block) | Does | Example |
+| --- | --- | --- |
+| `.scroll-draw` | SVG shapes with `pathLength="1"` draw with `--pe` | a route, a staff, a plan, a signature |
+| `.scroll-grow` / `.scroll-grow-y` | scaleX / scaleY from 0 to 1 with `--pe` | a period bar, a figure's bar, a ruling |
+| `.scroll-x` / `.scroll-x-rev` | translateX by `--shift` (16vw) across the crossing | a display line, a huge year, the closing name |
+| `.scroll-y` | translateY by `--shift` (12vh) | a photo moving slower than the page |
+| `.scroll-turn` | rotate by `--turn` (20deg) | a stamp, a sticker, a shape from the trade |
+| `.pin` | `position: sticky; top: 0` | a chapter heading that stays while its rows scroll under it |
+
+```astro
+<section data-scroll class="bg-ink text-bg">
+  <h2 class="text-display scroll-x" style="--shift: 10vw">Le trombone</h2>
+  <svg class="scroll-draw" viewBox="0 0 1200 120" aria-hidden="true">
+    {[0,1,2,3,4].map((i) => <line x1="0" x2="1200" y1={10 + i * 25} y2={10 + i * 25} pathLength="1" stroke="currentColor" stroke-width="6" />)}
+  </svg>
+</section>
+```
+
+Rules: transforms and strokes only (never width, top or opacity of text); a display line slides at most
+about a fifth of the screen and is fully readable at the middle of its crossing; two neighbouring
+display lines move in opposite directions; running text never moves with the scroll. A line set against
+a margin gets `padding-inline` of half its `--shift`, so the slide ends on the margin, never off the edge. To stagger several
+shapes, give each its own range with `--k` (0, 1, 2…):
+`stroke-dashoffset: clamp(0, calc(1 - var(--pe, 1) * 1.5 + var(--k) * 0.12), 1)`.
 
 ## Never lose content
 

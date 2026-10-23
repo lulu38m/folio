@@ -45,7 +45,10 @@ read the name. Each rule says what to do instead. *(check)* means `check_site.mj
 | One word of the headline in italic, serif, colour or underline *(look)* | One face, one colour per headline. |
 | Everything centred *(check)* | Left-anchored; centre one moment per page at most. |
 | Nine sizes close to each other *(check)* | Five sizes, far apart. |
-| Fade-and-rise on every block, bounce easing, infinite loops *(look)* | One signature move, short staggered entrances, ease-out (`motion.md`). |
+| Fade-and-rise on every block, bounce easing, infinite loops *(look)* | One signature move, one scroll move, short staggered entrances, ease-out (`motion.md`). |
+| A page that does not move at all, or only fades *(check: no scroll move)* | The sheet's scroll move on the motif and a display line (`data-scroll`, `motion.md` §Scroll). |
+| An empty page: type on plain ground, section after section *(check)* | The motif in three sections, two full-width fields, one element at display scale per section, and more material from the person (`SKILL.md` step 1). |
+| The same layout twice in a row, heading left and text right down the page *(check)* | The shape the sheet deals for each role; name each section's layout before building it. |
 | Hover lift and zoom on every card *(look)* | Hover feedback that suits each element, gated to real pointers. |
 
 ## 3. Palettes and faces

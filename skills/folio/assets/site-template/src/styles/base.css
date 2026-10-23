@@ -50,9 +50,10 @@ small, .small { font-size: var(--step-small); line-height: 1.45; }
 
 /* 4. Frame */
 .wrap { padding-inline: var(--margin); }
-.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+/* .cols, not .grid: Tailwind's `grid` utility must stay a plain display: grid. */
+.cols { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
 section + section { margin-top: var(--section-gap); }
-@media (max-width: 720px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 /* 5. States */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
@@ -69,6 +70,27 @@ html.js [data-reveal] { opacity: 0; transform: translateY(var(--rise, 16px)); }
 html.js [data-reveal].in { opacity: 1; transform: none;
   transition: opacity var(--dur-enter) var(--ease-out), transform var(--dur-enter) var(--ease-out);
   transition-delay: calc(var(--i, 0) * 60ms); }
+/* Lines: <h2 data-reveal="lines"><span><span>First line</span></span><span><span>Second</span></span></h2>
+   Each line rises out of its own mask, 80 ms apart. The outer span clips; the inner one moves. */
+html.js [data-reveal="lines"] { opacity: 1; transform: none; }
+[data-reveal="lines"] > * { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+[data-reveal="lines"] > * > * { display: block; }
+html.js [data-reveal="lines"] > * > * { transform: translateY(110%); }
+html.js [data-reveal="lines"].in > * > * { transform: none; transition: transform 700ms var(--ease-out); transition-delay: calc(var(--j, 0) * 80ms); }
+
+/* Scroll: base.js sets --p (0 when the [data-scroll] block enters at the bottom, 1 when it leaves at the top)
+   and --pe (0 on entering, 1 once its top is 35 % up the screen). Without script or with reduced motion both
+   stay unset, so every rule below must fall back to the finished state: var(--pe, 1), var(--p, 0.5). */
+.scroll-draw :is(path, line, polyline, circle, rect)[pathLength] { stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--pe, 1)); }
+.scroll-grow { transform-origin: left center; transform: scaleX(var(--pe, 1)); }
+.scroll-grow-y { transform-origin: center bottom; transform: scaleY(var(--pe, 1)); }
+.scroll-x { transform: translateX(calc((0.5 - var(--p, 0.5)) * var(--shift, 16vw))); }
+.scroll-x-rev { transform: translateX(calc((var(--p, 0.5) - 0.5) * var(--shift, 16vw))); }
+.scroll-y { transform: translateY(calc((0.5 - var(--p, 0.5)) * var(--shift, 12vh))); }
+.scroll-turn { transform: rotate(calc((var(--p, 0.5) - 0.5) * var(--turn, 20deg))); }
+.pin { position: sticky; top: 0; }
+main { overflow-x: clip; } /* a line sliding with the scroll never widens the page; clip keeps .pin working */
+
 /* A line drawn on load (DrawPath with `load`): hidden before the first paint only when script runs. */
 html.js .draw-gate:not(.drawn) path { stroke-dasharray: 1; stroke-dashoffset: 1; }
 @media (prefers-reduced-motion: reduce) {

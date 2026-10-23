@@ -14,6 +14,8 @@ uses (`trade`, `sector_tags`, `has_photo`, `projects`, `figures`, `places`) matt
   comes from. An empty list is normal.
 - `notes` holds anything you inferred and anything missing.
 - Keep the original language of the CV in every field; set `language` to its code (`fr`, `en`…).
+- What the person adds when asked (projects, links, pictures, numbers, their aim) goes in the same fields
+  with `"source": "person"` on the item, so the report can say where each fact came from.
 
 ## Fields
 

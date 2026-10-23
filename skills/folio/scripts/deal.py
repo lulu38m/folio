@@ -44,7 +44,7 @@ def features(p):
         "figures": len([x for x in p.get("figures", []) if x.get("value")]),
         "places": len(set(places)),
         "trade": (p.get("trade") or "other").lower(),
-        "tags": [t.lower() for t in p.get("sector_tags", [])] + [p.get("seniority", "").lower()],
+        "tags": sorted({t.lower() for t in p.get("sector_tags", []) + [p.get("seniority", "")] if t}),
         "name_len": len((p.get("name", {}) or {}).get("display", "")),
     }
 
@@ -142,13 +142,16 @@ def sheet(p, did, rt, rp, seed):
            f"- Fallbacks: {t['fallback']}",
            f"- Fetch: `node <skill>/scripts/fetch_fonts.mjs --out site/public/fonts {fetch}`", "",
            f"## Palette: {pal['name']}  (`{pid}`, {pal['mode']})", palette_block(pal), "",
-           "Proportions: ground 70–90 %, ink for text, accent under 5 % of any screen (the action and at most one other thing)."
+           "Proportions: ground 50–80 %, ink for text, accent under 5 % of any screen (the action and at most one other thing). "
+           "At least two full-width fields (a surface step, the ink as a ground, or a palette field) break the page into chapters."
            + (" This palette has fields: whole sections take field_n with its own ink; neighbours differ in lightness." if pal.get("fields") else ""), "",
            "## Hero", f"- Desktop: {d['hero']['desktop']}", f"- Phone: {d['hero']['phone']}", "",
            "## Sections (use the shape for each role you keep; drop roles with no claim)"]
     for role, shape in d["sections"].items():
         out.append(f"- **{role}**: {shape}")
-    out += ["", "## Signature move", d["signature"], "",
+    out += ["", "## Motif (draw it, then bring it back in at least three sections)", d["motif"], "",
+            "## Signature move", d["signature"], "",
+            "## Scroll move (one, tied to scroll; see references/motion.md §Scroll)", d["scroll"], "",
             "## The live thing (pick one)"] + [f"- {x}" for x in d["live"]] + ["",
             "## How this direction fails", d["fails"], "",
             f"Redraws used: type {rt}, palette {rp}. Record any redraw and its reason in work/notes.md."]

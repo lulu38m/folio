@@ -7,6 +7,8 @@ document.documentElement.classList.add("js");
   const els = [...document.querySelectorAll("[data-reveal]")];
   document.querySelectorAll("[data-stagger]").forEach((g) =>
     [...g.querySelectorAll("[data-reveal]")].forEach((el, i) => el.style.setProperty("--i", i)));
+  document.querySelectorAll('[data-reveal="lines"]').forEach((el) =>
+    [...el.children].forEach((line, j) => line.firstElementChild?.style.setProperty("--j", j)));
   if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) {
     els.forEach((el) => el.classList.add("in"));
     return;
@@ -22,6 +24,34 @@ document.documentElement.classList.add("js");
     els.forEach((el) => el.classList.add("in"));
     document.querySelectorAll(".draw-gate").forEach((el) => el.classList.add("drawn"));
   }, 2500);
+})();
+
+// Scroll: every [data-scroll] block gets --p (0 → 1 while it crosses the screen) and --pe (0 → 1 while it
+// enters, done when its top is 35 % up; it never goes back, so a drawing stays drawn, and it completes at the
+// end of the page). CSS ties transforms and drawings to them (base.css, motion.md §Scroll).
+// Nothing is set under reduced motion, so the CSS fallbacks (the finished state) apply.
+(() => {
+  const els = [...document.querySelectorAll("[data-scroll]")];
+  if (!els.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const clamp = (x) => Math.min(1, Math.max(0, x));
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const vh = innerHeight;
+    const atEnd = scrollY + vh >= document.documentElement.scrollHeight - 2;
+    for (const el of els) {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > 2 * vh) continue;
+      el.style.setProperty("--p", clamp((vh - r.top) / (vh + r.height)).toFixed(4));
+      const pe = Math.max(el._pe || 0, atEnd && r.top < vh ? 1 : clamp((vh - r.top) / (vh * 0.65)));
+      el._pe = pe;
+      el.style.setProperty("--pe", pe.toFixed(4));
+    }
+  };
+  const queue = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener("scroll", queue, { passive: true });
+  addEventListener("resize", queue);
+  update();
 })();
 
 // Copy email: <button data-copy="name@example.com" data-done="Copié">Copier l'adresse</button>

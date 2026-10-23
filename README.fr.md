@@ -62,7 +62,7 @@ Ajoutez `-g` pour l'installer partout ; sans, il ne vaut que pour le projet en
 
 ```bash
 git clone https://github.com/lulu38m/folio
-rsync -a --exclude '.DS_Store' folio/skills/folio/ ~/.claude/skills/folio/
+mkdir -p ~/.claude/skills && cp -R folio/skills/folio ~/.claude/skills/
 ```
 
 Redémarrez Claude Code après la copie. Dans l'app Claude, compressez `skills/folio/` en zip et importez-le dans Paramètres → Capacités → Skills.
@@ -104,8 +104,9 @@ Barres de compétences, « Salut, moi c'est Alex 👋 », effets machine à 
 
 - Un agent compatible Agent Skills : Claude Code, l'app Claude, Codex CLI, opencode, ou tout agent à instructions personnalisées
 - Python 3.9+ avec `pypdf`
-- Node.js 22.23+ (Node 24 LTS conseillé) et npm
+- Node.js 22.23+ (Node 24 LTS conseillé) et npm. Vérifiez avec `node -v` ; si elle est plus ancienne, `nvm install 24` (ou téléchargez-la sur nodejs.org)
 - Playwright avec Chromium, pour la vérification : `npm i -D playwright && npx playwright install chromium`
+- Facultatif : `tesseract` (avec le français), pour lire les CV exportés en image (Canva, scans). Sans lui, l'agent lit lui-même l’image de la page
 
 ## Crédits et licence
 

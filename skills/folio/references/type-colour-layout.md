@@ -28,7 +28,7 @@ so the page looks decided.
 
 ## Colour
 
-- Roles: `--bg` (ground, 70–90 % of the page), `--surface` (one tone step, for panels and fields),
+- Roles: `--bg` (ground, 50–80 % of the page; the rest is fields and pictures), `--surface` (one tone step, for panels and fields),
   `--ink` (text), `--muted` (secondary text, passes 4.5:1), `--accent` (the action and at most one other
   thing, under 5 % of any screen), `--accent-ink` (text on the accent), and `--field-n` with its ink when
   the palette has fields.
@@ -36,7 +36,8 @@ so the page looks decided.
 - Surfaces are separated by tone, not by lines or shadows. One step is enough; never nest a panel in a
   panel.
 - A field is a whole section in one flat colour with its own ink, edge to edge. Neighbouring fields differ
-  in lightness. Order them like chapters.
+  in lightness. Order them like chapters. **Every page has at least two**: the ink used as the ground of
+  the cover or of one chapter is the simplest and strongest (light ink on a deep ground, then back).
 - Headings are ink, not accent. Links are ink with an underline; the accent marks the main action.
 - A dark page: `color-scheme: dark` on `:root`, a tinted deep ground, a soft light ink, `--muted`
   checked at 4.5:1, depth from a lighter surface step, never from glows.
@@ -62,7 +63,9 @@ so the page looks decided.
   the name and the action; links move to the footer or a simple sheet. Fixed navigation never covers
   text; prefer static.
 - **Endings**: a designed close (the email large, the name returned, one quiet line), not link columns.
-- **Short is fine.** Most personal sites need four to six sections. Do not add sections to seem complete.
+- **Short is fine, empty is not.** Most personal sites need four to six sections; do not add sections to
+  seem complete. But each section is full: its content, the motif or a picture, and one thing at display
+  scale. A section that is a heading and two lines of body text on plain ground is a gap in the page.
 
 ## The phone
 

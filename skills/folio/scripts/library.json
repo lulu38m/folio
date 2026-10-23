@@ -621,7 +621,9 @@
         "copy the email address with a confirmation that replaces the button label for 2 s",
         "a 'short version' toggle that collapses the page to the first screen, the last two roles and the contact"
       ],
-      "fails": "The name is so big the first screen says nothing else: keep the job and the sentence in the first screen. Long names (over 20 characters) need two lines; fit each line separately."
+      "fails": "The name is so big the first screen says nothing else: keep the job and the sentence in the first screen. Long names (over 20 characters) need two lines; fit each line separately.",
+      "motif": "The name's own letters, cut and reused: one initial set huge and cropped by a section edge, the name returning at the close.",
+      "scroll": "The name drifts sideways as the page scrolls (translateX tied to --p, about 8vw), and the closing name slides in the opposite direction."
     },
     "registre": {
       "name": "Le registre / The index",
@@ -677,7 +679,9 @@
         "filter the index by skill: clicking a tool highlights the roles where it was used",
         "copy the email with confirmation"
       ],
-      "fails": "Dense becomes grey: keep the headline huge and the table's text in full ink. A table with lines everywhere reads as a spreadsheet; lines only between rows, in a tone step."
+      "fails": "Dense becomes grey: keep the headline huge and the table's text in full ink. A table with lines everywhere reads as a spreadsheet; lines only between rows, in a tone step.",
+      "motif": "Thick index bars: each row's period drawn as a filled bar on a shared year scale (real dates only), repeated in the hero as a summary of the whole career.",
+      "scroll": "The period bars grow to their length as their rows scroll in (scaleX tied to --pe); the hero's career bar fills while the hero scrolls away."
     },
     "chapitres": {
       "name": "Les chapitres en couleur / Colour chapters",
@@ -732,7 +736,9 @@
         "a 'what I'm looking for' card on the first screen that cycles between the two or three real criteria from the CV when tapped",
         "copy the email with confirmation"
       ],
-      "fails": "Fields that differ only in hue vibrate: neighbours must differ in lightness. More than three field colours becomes a toy."
+      "fails": "Fields that differ only in hue vibrate: neighbours must differ in lightness. More than three field colours becomes a toy.",
+      "motif": "A flat shape taken from the trade (a tab, a sticker, a territory outline), one per chapter, in the next field's colour so each chapter announces the next.",
+      "scroll": "Each field's heading is pinned (position: sticky) while its chapter scrolls under it, and the shape rotates or slides a few degrees with --p."
     },
     "artefact": {
       "name": "La pièce du métier / The trade's artefact",
@@ -793,7 +799,9 @@
         "the artefact's date field shows today's date",
         "a print button that prints the page as the artefact itself (print stylesheet)"
       ],
-      "fails": "Costume: an artefact so literal it becomes a joke or unreadable. It is the structure, not a gag; the text stays at real reading sizes. Never imitate an official form of a real institution (logos, real reference numbers)."
+      "fails": "Costume: an artefact so literal it becomes a joke or unreadable. It is the structure, not a gag; the text stays at real reading sizes. Never imitate an official form of a real institution (logos, real reference numbers).",
+      "motif": "A drawn element of the artefact (its ruling, its stamp, its grid, its staff) that returns in at least three sections, in the palette, as inline SVG.",
+      "scroll": "The artefact's drawn element draws itself as each section scrolls in (stroke or scaleX tied to --pe), as if the sheet were being filled in."
     },
     "portrait": {
       "name": "Le portrait / The portrait",
@@ -851,7 +859,9 @@
         "copy the email with confirmation",
         "download the CV PDF"
       ],
-      "fails": "A poor photograph (low resolution, busy background, selfie) used large is worse than none: if it cannot hold half a screen, choose another direction."
+      "fails": "A poor photograph (low resolution, busy background, selfie) used large is worse than none: if it cannot hold half a screen, choose another direction.",
+      "motif": "A crop of the photograph's own shape or tone (the edge of a jacket, a background colour) reused as a field or a band in later sections.",
+      "scroll": "The photograph moves slower than the page (translateY tied to --p, at most 10 %), and its crop opens wider as the hero scrolls away."
     },
     "lettre": {
       "name": "La lettre / The letter",
@@ -906,7 +916,9 @@
         "a language switch when the CV exists in two languages (both versions written from the person's text, never machine-mixed)",
         "copy the email with confirmation"
       ],
-      "fails": "Too long: a letter of 2,000 words is a wall. Keep the whole page under about 700 words. The margin column empty is a hole: put facts in it all the way down."
+      "fails": "Too long: a letter of 2,000 words is a wall. Keep the whole page under about 700 words. The margin column empty is a hole: put facts in it all the way down.",
+      "motif": "The letter's margin: dates and facts set in the margin column all the way down, and a drawn signature (from the person's name, set in the display face) at the end.",
+      "scroll": "Paragraphs of the letter are revealed line by line as they arrive (data-reveal=\"lines\"); the margin notes slide in 12px later."
     },
     "chiffres": {
       "name": "Les preuves chiffrées / The figures",
@@ -960,7 +972,9 @@
         "the hero figure can be stepped through the person's other real figures with two arrow buttons",
         "copy the email with confirmation"
       ],
-      "fails": "Figures without context are vanity: every figure carries its sentence and its year. Only numbers from the CV. If fewer than three exist, this direction is not dealt."
+      "fails": "Figures without context are vanity: every figure carries its sentence and its year. Only numbers from the CV. If fewer than three exist, this direction is not dealt.",
+      "motif": "A drawn scale for each figure: a bar, a grid of units, or a shape whose size is the real ratio from the CV, never decorative.",
+      "scroll": "Each figure's drawing grows to its true size as the figure scrolls in (scaleX/scaleY tied to --pe), while the number counts up once."
     },
     "itineraire": {
       "name": "L'itinéraire / The route",
@@ -1018,7 +1032,9 @@
         "hovering or tapping a stop on the hero highlights the matching role below and scrolls to it",
         "copy the email with confirmation"
       ],
-      "fails": "A thin line with small dots is the generic timeline: the line is thick and the stops are big filled shapes with real labels. Fewer than three places: not dealt."
+      "fails": "A thin line with small dots is the generic timeline: the line is thick and the stops are big filled shapes with real labels. Fewer than three places: not dealt.",
+      "motif": "The route itself: the same drawn line continues through the page, each section picking up the segment of its place.",
+      "scroll": "The route draws as the page scrolls (stroke-dashoffset tied to --p of the whole page), so reaching a section reaches its city on the line."
     },
     "atelier": {
       "name": "L'atelier / The workshop",
@@ -1075,7 +1091,9 @@
         "filter projects by type (when there are 5 or more)",
         "a before/after slider when the CV describes a redesign and both images exist"
       ],
-      "fails": "Invented work: never draw a project the CV does not describe, and never imitate what the work looks like. A typeface or logo the person designed is never 'shown' in another face. Grey boxes instead of stills: draw the plate properly or leave the project as text."
+      "fails": "Invented work: never draw a project the CV does not describe, and never imitate what the work looks like. A typeface or logo the person designed is never 'shown' in another face. Grey boxes instead of stills: draw the plate properly or leave the project as text.",
+      "motif": "A frame from the work: the screenshot's own colours or one of its shapes reused as section fields and as the hover state of project titles.",
+      "scroll": "Project stills scroll at a slightly different speed from their captions (translateY tied to --p), and open from a clip as they enter."
     },
     "affiche": {
       "name": "L'affiche / The poster",
@@ -1129,7 +1147,9 @@
         "copy the email with confirmation",
         "the skills wall: tapping a skill shows, in a line under the wall, where it was used (from the CV)"
       ],
-      "fails": "All caps everywhere is shouting: capitals only for the condensed display lines. Two sizes means two sizes; a third creeping in breaks the poster."
+      "fails": "All caps everywhere is shouting: capitals only for the condensed display lines. Two sizes means two sizes; a third creeping in breaks the poster.",
+      "motif": "A poster element repeated across sections: a huge numeral or word from the CV (a year, a city, a sport) set in the display face and cropped by the edge.",
+      "scroll": "Each poster's display line moves horizontally against the scroll (translateX tied to --p, about 12vw), so neighbouring posters slide in opposite directions."
     }
   },
   "roles": [

@@ -33,6 +33,11 @@ Open `desktop-fold.png`, `desktop-full.png`, then the tablet and phone pairs. On
     h1, the sentence and the action?
 11. **Substance.** Does every section deliver its information completely and at reading size? Would a
     recruiter leave knowing the last two roles, the dates, the level, what the person wants?
+11b. **Fullness.** Scroll the full-page picture fast: does it read as a sequence of distinct screens
+    (cover, field, poster, drawing…) or as one long sheet of type? Count the sections that hold only a
+    heading and text on plain ground: more than one is a page that feels empty.
+11c. **Motion.** Watch a recording of the page scrolling (screenshots cannot show it). Does something
+    answer the scroll between the first screen and the contact? Is it the person's motif, or a fade?
 12. **Collisions.** Anything on top of a headline or a button? An accent or a comma touching the line above
     in a tight display setting? Anything off the edge of the phone?
 13. **Truth.** Is every fact on the page in the CV? Anything inflated, invented, or private that should
@@ -67,6 +72,9 @@ score it again as the juror who did not build it.
 - A section with half its width empty, unequal margins, or a blank stretch over half a screen: design
   ≤ 6.5.
 - No action on the first screen: usability ≤ 7. The five-second pass fails: usability ≤ 6.
+- Two or more sections of heading and text alone on plain ground, or no motif after the first screen:
+  design ≤ 6.5.
+- Nothing moves with the scroll: creativity ≤ 7.
 - An invented fact: content ≤ 3, and fix it before anything else.
 - A blank band where a reveal did not fire: usability ≤ 5.
 

@@ -134,7 +134,10 @@ const measure = () => {
   if (tiny) F(`text under 12px: ${tiny} element(s)`);
   if (small) W(`text under 13px: ${small} element(s)`);
   if (smallBody > 2) W(`running text under 16px: ${smallBody} paragraph(s)`);
-  if (sizes.size > 7) W(`too many type sizes: ${sizes.size} (${[...sizes].sort((a, b) => a - b).join(", ")}px); aim for five, far apart`);
+  // Sizes within 2px of each other count as one (clamp() rounding).
+  const steps = [...sizes].sort((a, b) => a - b).reduce((acc, x) => (acc.length && x - acc[acc.length - 1] <= 2 ? acc : [...acc, x]), []);
+  if (steps.length > 7) F(`too many type sizes: ${steps.length} (${steps.join(", ")}px); five, far apart`);
+  else if (steps.length > 5) W(`${steps.length} type sizes (${steps.join(", ")}px); five at most, far apart`);
   R.info.sizes = [...sizes].sort((a, b) => a - b);
 
   // Fonts
@@ -277,14 +280,77 @@ const measure = () => {
     }
   }
 
+  // Collisions: text boxes that overlap other text (a grid class gone wrong, a negative margin, a pinned block)
+  {
+    // Block-level boxes only: an inline link wrapping over two lines has a box that covers its neighbours.
+    const leaves = textEls.filter((el) => !el.closest("svg,[aria-hidden=true],[data-overlap]") && cs(el).position !== "fixed" && !/^inline/.test(cs(el).display))
+      .map((el) => ({ el, r: el.getBoundingClientRect() })).filter(({ r }) => r.width > 4 && r.height > 4);
+    let hits = 0; const ex = [];
+    for (let i = 0; i < leaves.length; i++) for (let j = i + 1; j < leaves.length; j++) {
+      const a = leaves[i], b = leaves[j];
+      if (a.el.contains(b.el) || b.el.contains(a.el)) continue;
+      const w = Math.min(a.r.right, b.r.right) - Math.max(a.r.left, b.r.left), h = Math.min(a.r.bottom, b.r.bottom) - Math.max(a.r.top, b.r.top);
+      if (w <= 2 || h <= 2) continue;
+      if ((w * h) / Math.min(a.r.width * a.r.height, b.r.width * b.r.height) < 0.15) continue;
+      hits++; if (ex.length < 2) ex.push(`"${a.el.textContent.trim().slice(0, 24)}" / "${b.el.textContent.trim().slice(0, 24)}"`);
+    }
+    if (hits) F(`text on top of text: ${hits} overlap(s) (${ex.join("; ")}). Check grid classes and negative margins`);
+  }
+
+  // Words cut in two: break-all / anywhere make an email or a long word break mid-word ("supinfo.c / om")
+  {
+    const cut = textEls.filter((el) => { const s = cs(el); return s.wordBreak === "break-all" || s.overflowWrap === "anywhere"; })
+      .filter((el) => { const r = document.createRange(); r.selectNodeContents(el); const lines = new Set([...r.getClientRects()].map((x) => Math.round(x.top))); return lines.size > 1; });
+    if (cut.length) W(`${cut.length} element(s) may break words in the middle (word-break: break-all or overflow-wrap: anywhere): break an email after the @ with <wbr>, or set it smaller`);
+  }
+
   // Margins (desktop and phone)
-  const boxes = textEls.map((el) => { const r = el.getBoundingClientRect(); const ml = Math.min(0, parseFloat(cs(el).marginLeft) || 0); return { left: r.left - ml, right: r.right, width: r.width }; }).filter((r) => r.width > 0 && r.width < vw * 0.98);
+  const boxes = textEls.filter((el) => !el.closest(".scroll-x,.scroll-x-rev,.scroll-y,.scroll-turn,[data-moves]")).map((el) => { const r = el.getBoundingClientRect(); const ml = Math.min(0, parseFloat(cs(el).marginLeft) || 0); return { left: r.left - ml, right: r.right, width: r.width }; }).filter((r) => r.width > 0 && r.width < vw * 0.98);
   if (boxes.length) {
     const left = Math.min(...boxes.map((b) => b.left)), right = vw - Math.max(...boxes.map((b) => b.right));
     R.info.margins = [Math.round(left), Math.round(right)];
     if (left < 15) W(`text ${Math.round(left)}px from the left edge (16px minimum)`);
     if (Math.abs(left - right) > 32 && right > 0) W(`unequal outer margins: ${Math.round(left)}px left, ${Math.round(right)}px right`);
   }
+
+  // Fullness (desktop): sections that repeat one layout, long empty stretches, a page made of type alone
+  if (vw >= 1200) {
+    const bodyBgC = bgOf(document.body) || { r: 255, g: 255, b: 255 };
+    const same = (a, b) => a && b && Math.abs(a.r - b.r) + Math.abs(a.g - b.g) + Math.abs(a.b - b.b) < 6;
+    const secs = [...document.querySelectorAll("main > section, main > div > section, body > section, main > article")].filter(visible);
+    const shape = (sec) => {
+      const r = sec.getBoundingClientRect();
+      const h = sec.querySelector("h1,h2"); const hr = h?.getBoundingClientRect();
+      const others = [...sec.querySelectorAll("p,li,dd,img,svg,figure,video,canvas")].filter((k) => visible(k) && !h?.contains(k)).map((k) => k.getBoundingClientRect());
+      const beside = hr && others.some((o) => o.left >= hr.right - 4 && o.top < hr.bottom && o.bottom > hr.top);
+      const centred = h && cs(h).textAlign === "center";
+      const field = !same(bgOf(sec), bodyBgC);
+      const pic = [...sec.querySelectorAll("img,svg,video,canvas,picture")].some((k) => { const b = k.getBoundingClientRect(); return b.width >= 64 && b.height >= 32; });
+      const big = [...sec.querySelectorAll("*")].some((k) => visible(k) && parseFloat(cs(k).fontSize) >= 1.6 * parseFloat(cs(h || sec).fontSize) && k.textContent.trim().length > 2);
+      return { key: [beside ? "split" : centred ? "centred" : "stacked", field ? "field" : "ground", pic ? "picture" : "", big ? "scale" : ""].join("/"), pic, field, h: r.height };
+    };
+    const shapes = secs.map(shape);
+    let run = 1, worst = 1;
+    for (let i = 1; i < shapes.length; i++) { run = shapes[i].key === shapes[i - 1].key ? run + 1 : 1; worst = Math.max(worst, run); }
+    R.info.layouts = shapes.map((x) => x.key);
+    if (worst >= 3) F(`${worst} sections in a row with the same layout (${shapes.map((x) => x.key.split("/")[0]).join(", ")}): give each section the shape the sheet deals for its role`);
+    else if (worst === 2) W(`two neighbouring sections share a layout (${shapes.map((x) => x.key.split("/")[0]).join(", ")})`);
+    const withPic = shapes.filter((x) => x.pic).length, fields = shapes.filter((x) => x.field).length;
+    if (secs.length >= 4 && withPic < 2) W(`only ${withPic} section(s) carry a picture or a drawing: draw the sheet's motif from the person's world and bring it back`);
+    if (secs.length >= 4 && fields < 2) W(`only ${fields} full-width field(s): the page reads as one long sheet; give two sections their own ground (a surface step, the ink, a field)`);
+    // Empty stretches: vertical gaps with no text, picture or field, measured over the whole page
+    const marks = [...document.body.querySelectorAll("*")].filter(visible).filter((el) => {
+      if (el.matches("img,svg,video,canvas,picture,button,a.button") || textEls.includes(el)) return true;
+      return !same(bgOf(el), bodyBgC) && el.getBoundingClientRect().width > vw * 0.5 && el !== document.body;
+    }).map((el) => { const r = el.getBoundingClientRect(); return [r.top + scrollY, r.bottom + scrollY]; }).sort((a, b) => a[0] - b[0]);
+    let reach = marks.length ? marks[0][1] : 0, gap = 0;
+    for (const [t, b] of marks) { if (t > reach) gap = Math.max(gap, t - reach); reach = Math.max(reach, b); }
+    if (gap > vh * 0.6) W(`an empty stretch of ${Math.round(gap)}px (more than half a screen): close it with content, a drawing or a field`);
+  }
+
+  // Motion: the page should move a little, with the scroll as well as on load
+  R.info.motion = { reveals: document.querySelectorAll("[data-reveal]").length, scroll: document.querySelectorAll("[data-scroll]").length, islands: document.querySelectorAll("astro-island").length };
+  if (vw >= 1200 && !R.info.motion.scroll && !R.info.motion.islands) W("no scroll move: tie the sheet's motif to the scroll (data-scroll, motion.md §Scroll)");
 
   // Hidden content (reveals that did not fire)
   const hidden = textEls.filter((el) => { let e = el; while (e && e !== document.body) { if (parseFloat(cs(e).opacity) < 0.05) return true; e = e.parentElement; } return false; });
@@ -356,7 +422,7 @@ const measure = () => {
     if (document.fonts.size && !document.querySelector('link[rel="preload"][as="font"]')) W("seo: no font preload for the first screen (link rel=preload as=font)");
     // theme-color and dark pages
     const tc = meta('meta[name="theme-color"]');
-    const firstBlock = document.querySelector("main > section, body > section, header, main") || document.body;
+    const firstBlock = ["main > section", "body > section", "header", "main"].map((q) => document.querySelector(q)).find(Boolean) || document.body;
     const fb = bgOf(firstBlock) || bodyBg;
     if (tc && /^#[0-9a-f]{6}$/i.test(tc)) {
       const t = { r: parseInt(tc.slice(1, 3), 16), g: parseInt(tc.slice(3, 5), 16), b: parseInt(tc.slice(5, 7), 16) };
