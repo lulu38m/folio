@@ -97,7 +97,7 @@ line. Nothing from `work/` is published.
 
 The site is Astro with React islands (`SKILL.md` step 8). The stack adds possibilities, not exceptions:
 
-- Every rule above applies to components from libraries (Cult UI, shadcn) exactly as to hand-written
+- Every rule above applies to components from libraries (Cult UI, Kokonut UI, shadcn) exactly as to hand-written
   markup. `references/components.md` says which ones can be adapted and how.
 - The page is static HTML first. All text, every heading and every link are in the HTML Astro writes;
   React only adds movement or interaction on top *(check: no-script pass)*.

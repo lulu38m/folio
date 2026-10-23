@@ -211,7 +211,7 @@ Order of work:
    centred programme, split, poster, index, field…) before building it. The check measures all three.
 6. **The live thing,** one, from the sheet's list, made with the person's real content. This is where a
    React island earns its place: a figure that counts (`CountUp`), a route that draws (`DrawPath`), rows
-   that open, tabs. A component library (Cult UI) only through `references/components.md`.
+   that open, tabs. A component library (Cult UI, Kokonut UI) only through `references/components.md`.
 7. **States and semantics:** one `h1`, a heading on every section, real links, `mailto:` with a
    subject, visible focus, `alt` and `width`/`height` on every image, headings in order
    (`h1` → `h2` → `h3`), the name as real text with `translate="no"`. All of it in the HTML Astro writes,
@@ -361,7 +361,7 @@ of flat colour.
 | `references/directions.md` | Step 5: what each direction is, what it needs, how it fails. |
 | `references/copy.md` | Steps 4 and 6: the argument, headlines, rewriting experience, French typography. |
 | `references/rules.md` | Step 8: every house rule and generated-portfolio tell, with what to do instead; §7 the stack. |
-| `references/components.md` | Step 8, before using any component library (Cult UI): which ones, how to adapt them. |
+| `references/components.md` | Step 8, before using any component library (Cult UI, Kokonut UI): which ones, how to adapt them. |
 | `references/type-colour-layout.md` | Step 8: scale, setting, palettes, margins, grid, the phone. |
 | `references/seo.md` | Step 9: the head, the JSON-LD `Person`, on-page rules, what never to do. |
 | `references/motion.md` | Step 12: what moves, curves, durations, scroll-linked moves, reduced motion, Motion islands. |
@@ -379,4 +379,4 @@ Credits: the house rules and the look-and-fix loop are adapted from
 [Emil Kowalski's skills](https://github.com/emilkowalski/skills) (MIT), and the technical hygiene in
 the SEO step from Vercel's [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
 (MIT), used by the [agent-skills](https://github.com/vercel-labs/agent-skills) `web-design-guidelines` skill.
-Components may be adapted from [Cult UI](https://www.cult-ui.com) (MIT).
+Components may be adapted from [Cult UI](https://www.cult-ui.com) and [Kokonut UI](https://kokonutui.com) (MIT).
